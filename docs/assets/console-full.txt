@@ -1,0 +1,83 @@
+╭──────────────────────────────── Health check ────────────────────────────────╮
+│ GET http://127.0.0.1:43185/health                                            │
+│ HTTP 200 · 1.47 ms                                                           │
+│ Request headers                                                              │
+│ {                                                                            │
+│   "User-Agent": "python-requests/2.34.2",                                    │
+│   "Accept-Encoding": "gzip, deflate",                                        │
+│   "Accept": "*/*",                                                           │
+│   "Connection": "keep-alive"                                                 │
+│ }                                                                            │
+│ Request body                                                                 │
+│ Body is empty                                                                │
+│ Response headers                                                             │
+│ {                                                                            │
+│   "Server": "BaseHTTP/0.6 Python/3.12.14",                                   │
+│   "Date": "Thu, 01 Oct 2026 07:19:19 GMT",                                   │
+│   "Content-Type": "application/json",                                        │
+│   "Content-Length": "115"                                                    │
+│ }                                                                            │
+│ Response body                                                                │
+│ {                                                                            │
+│   "folio": "ALT-1042",                                                       │
+│   "rfc": "",                                                                 │
+│   "access_token": "[REDACTED]",                                              │
+│   "office": {                                                                │
+│     "name": "Centro",                                                        │
+│     "active": true                                                           │
+│   }                                                                          │
+│ }                                                                            │
+│  Assertion                           Result             Message              │
+│  Health status                       PASS                                    │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────── Consult distributor ─────────────────────────────╮
+│ GET                                                                          │
+│ http://127.0.0.1:43185/distributor?tag=one&tag=two&api_key=%5BREDACTED%5D    │
+│ HTTP 200 · 3.24 ms                                                           │
+│ Params                                                                       │
+│ [                                                                            │
+│   {                                                                          │
+│     "name": "tag",                                                           │
+│     "value": "one"                                                           │
+│   },                                                                         │
+│   {                                                                          │
+│     "name": "tag",                                                           │
+│     "value": "two"                                                           │
+│   },                                                                         │
+│   {                                                                          │
+│     "name": "api_key",                                                       │
+│     "value": "[REDACTED]"                                                    │
+│   }                                                                          │
+│ ]                                                                            │
+│ Request headers                                                              │
+│ {                                                                            │
+│   "User-Agent": "python-requests/2.34.2",                                    │
+│   "Accept-Encoding": "gzip, deflate",                                        │
+│   "Accept": "*/*",                                                           │
+│   "Connection": "keep-alive",                                                │
+│   "Authorization": "[REDACTED]"                                              │
+│ }                                                                            │
+│ Request body                                                                 │
+│ Body is empty                                                                │
+│ Response headers                                                             │
+│ {                                                                            │
+│   "Server": "BaseHTTP/0.6 Python/3.12.14",                                   │
+│   "Date": "Thu, 01 Oct 2026 07:19:19 GMT",                                   │
+│   "Content-Type": "application/json",                                        │
+│   "Content-Length": "115"                                                    │
+│ }                                                                            │
+│ Response body                                                                │
+│ {                                                                            │
+│   "folio": "ALT-1042",                                                       │
+│   "rfc": "",                                                                 │
+│   "access_token": "[REDACTED]",                                              │
+│   "office": {                                                                │
+│     "name": "Centro",                                                        │
+│     "active": true                                                           │
+│   }                                                                          │
+│ }                                                                            │
+│  Assertion                         Result     Message                        │
+│  HTTP status                       PASS                                      │
+│  RFC must contain a value          FAIL       '' should not be empty.        │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Robot FAIL: '' should not be empty.

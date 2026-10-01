@@ -1,0 +1,48 @@
+[project]
+name = "robotframework-request-logger"
+version = "0.1.0"
+description = "Protected HTTP request and response console logging for Robot Framework with Rich."
+authors = [{name = "Angel Molina"}]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12,<4"
+dependencies = ["robotframework>=7.5,<8", "requests>=2.32,<3", "rich>=14,<15"]
+keywords = ["robotframework", "requests", "console", "rich"]
+classifiers = ["Framework :: Robot Framework :: Library", "Programming Language :: Python :: 3", "Development Status :: 3 - Alpha"]
+
+[project.urls]
+Repository = "https://github.com/angel-valdezzz/robotframework-request-logger"
+Documentation = "https://angel-valdezzz.github.io/robotframework-request-logger/"
+
+[tool.poetry]
+packages = [{include = "request_logger", from = "src"}, {include = "RequestLogger.py", from = "src"}]
+requires-poetry = ">=2.5.1,<3"
+
+[tool.poetry.group.dev.dependencies]
+robotframework-requests = "0.9.7"
+robotframework-robocop = "^9.1.0"
+ruff = ">=0.16,<1"
+mypy = ">=1.15,<2"
+types-requests = "*"
+twine = ">=6,<7"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = ">=9.6,<10"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+[tool.mypy]
+python_version = "3.12"
+disallow_untyped_defs = true
+check_untyped_defs = true
+ignore_missing_imports = true
+[tool.robocop]
+target-version = 7
+[tool.robocop.lint]
+threshold = "E"
+[build-system]
+requires = ["poetry-core>=2.0,<3"]
+build-backend = "poetry.core.masonry.api"
