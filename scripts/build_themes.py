@@ -1,5 +1,6 @@
 """Generate every installed theme from the same protected response and renderer."""
 
+import html
 import io
 from pathlib import Path
 
@@ -60,7 +61,7 @@ it does not change the terminal background, HTTP colors or assertion colors.
 Text and empty responses do not receive JSON highlighting. Empty detail sections
 are omitted. Borders and section separators use a soft neutral color.
 
-All tabs below show the **same protected response**, exported from the production
+All previews show the **same protected response**, exported from the production
 Rich renderer at 90 columns. Terminal fonts and color capabilities may differ.
 `ansi_dark` and `ansi_light` use your terminal palette; these exports use the
 same dark terminal palette for comparison. Prefer `ansi_light` in a light terminal.
@@ -83,7 +84,7 @@ no cambia el fondo de la terminal ni los colores HTTP o de assertions.
 Las respuestas de texto y vacías no reciben resaltado JSON. Se omiten las secciones
 vacías. Los bordes y separadores usan un color neutro suave.
 
-Todas las pestañas muestran el **mismo response protegido**, exportado desde el
+Todas las vistas previas muestran el **mismo response protegido**, exportado desde el
 renderizador Rich de producción a 90 columnas. La fuente y los colores pueden
 variar según tu terminal. `ansi_dark` y `ansi_light` usan la paleta de tu terminal;
 estas muestras usan la misma paleta oscura para comparar. Usa `ansi_light` en una
@@ -102,23 +103,71 @@ python -c "from request_logger.theme import available_themes; print(', '.join(av
     }
     # Put the default first, then every supported style without a hand-maintained list.
     ordered = ("monokai",) + tuple(name for name in themes if name != "monokai")
+    labels = {
+        "en": (
+            "Choose a theme",
+            "Search themes",
+            "Available themes",
+            "Previous",
+            "Next",
+            "Copy import",
+            "Copied",
+            "No matching themes",
+            "Select the code to copy manually",
+            "Preview unavailable; open the image directly",
+        ),
+        "es": (
+            "Elige un tema",
+            "Buscar temas",
+            "Temas disponibles",
+            "Anterior",
+            "Siguiente",
+            "Copiar import",
+            "Copiado",
+            "No hay temas que coincidan",
+            "Selecciona el código para copiarlo manualmente",
+            "Vista previa no disponible; abre la imagen directamente",
+        ),
+    }
     for language, introduction in introductions.items():
-        tabs = []
-        for name in ordered:
-            tabs.append(f'''=== "{name}"
-
-    ### {name}
-
-    ```robotframework
-    *** Settings ***
-    Library    RequestLogger    mode=full    syntax_theme={name}
-    ```
-
-    ![{name}](assets/themes/{name}.svg)
-
-''')
+        choose, search, available, prev, nxt, copy, copied, empty, manual, error = labels[language]
+        options = "".join(
+            f'<option value="{html.escape(name)}">{html.escape(name)}</option>' for name in ordered
+        )
+        links = " · ".join(f'<a href="../assets/themes/{name}.svg">{name}</a>' for name in ordered)
+        gallery = f"""<div class="theme-gallery" data-theme-gallery
+ data-copied="{copied}" data-manual="{manual}">
+  <details class="theme-picker" hidden>
+    <summary>{choose}: <strong data-theme-current>monokai</strong></summary>
+    <div class="theme-picker-menu">
+      <label for="theme-search">{search}</label>
+      <input id="theme-search" type="search" autocomplete="off" placeholder="one-dark, dracula…">
+      <label for="theme-select">{available}</label>
+      <select id="theme-select" size="8">{options}</select>
+      <p data-theme-empty hidden role="status">{empty}</p>
+    </div>
+  </details>
+  <div class="theme-gallery-nav" hidden>
+    <button type="button" data-theme-prev>{prev}</button>
+    <span data-theme-position role="status" aria-live="polite"></span>
+    <button type="button" data-theme-next>{nxt}</button>
+  </div>
+  <h3 data-theme-title>monokai</h3>
+  <img data-theme-preview src="../assets/themes/monokai.svg" alt="monokai"
+       data-base="../assets/themes/" width="1100">
+  <p data-theme-image-error hidden role="alert">{error}</p>
+  <p><a data-theme-image-link href="../assets/themes/monokai.svg">monokai.svg</a></p>
+  <div class="theme-gallery-code">
+    <button type="button" data-theme-copy hidden>{copy}</button>
+    <pre><code data-theme-import>*** Settings ***
+Library    RequestLogger    mode=full    syntax_theme=monokai</code></pre>
+    <span data-theme-copy-status role="status" aria-live="polite"></span>
+  </div>
+  <noscript><p>{available}: {links}</p></noscript>
+</div>
+"""
         (root / "docs" / language / "themes.md").write_text(
-            introduction + "".join(tabs), encoding="utf-8"
+            introduction + gallery, encoding="utf-8"
         )
 
 

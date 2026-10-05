@@ -8,6 +8,10 @@
 - English and Spanish Themes galleries with matching response previews and imports.
 - Reproducible theme previews generated from the production renderer.
 
+### Fixed
+
+- Themes documentation now uses a searchable selector with Previous/Next controls, preview and copyable import instead of a tab row limited to 20 visible panels.
+
 ### Changed
 
 - JSON uses themed syntax highlighting with the theme's block background (default: monokai).

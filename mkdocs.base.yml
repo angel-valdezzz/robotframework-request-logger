@@ -42,6 +42,7 @@ markdown_extensions:
       alternate_style: true
 extra_javascript:
   - assets/external.js
+  - assets/theme-gallery.js
 extra:
   alternate:
     - name: English
@@ -53,3 +54,4 @@ extra:
 
 extra_css:
   - assets/stylesheets/standard.css
+  - assets/stylesheets/theme-gallery.css
