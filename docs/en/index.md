@@ -1,3 +1,5 @@
+<div class="hero" markdown>
+
 # HTTP visibility in your console
 
 **RequestLogger** complements Robot execution with recorded requests, responses, and
@@ -6,6 +8,8 @@ assertion results. It does not call services, validate data, or depend on Reques
 [Get started](usage.md){ .md-button .md-button--primary }
 [View console output](console.md){ .md-button }
 [Keywords](keywords/index.html){ .md-button }
+
+</div>
 
 ```bash
 poetry add robotframework-request-logger
