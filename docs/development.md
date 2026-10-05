@@ -19,3 +19,21 @@ Las entregas entran por PR a main con CI correcto. release.yml valida tag y asce
 respecto a main. PyPI utiliza Trusted Publishing con repository
 robotframework-request-logger, workflow release.yml y environment pypi; no utiliza tokens
 permanentes. Configurar el publisher es un paso previo a la primera publicación.
+
+## Mantener los dos idiomas de documentación
+
+El contenido en español vive en `docs/` y conserva sus URLs públicas actuales.
+El inglés vive en `docs-en/` y se publica bajo `/en/`. Las dos configuraciones heredan
+los estilos y el selector de idiomas de `mkdocs.base.yml`.
+
+Al modificar una guía, actualiza su equivalente en el otro idioma y conserva los mismos
+nombres de archivo para que el selector mantenga la página actual. Los nombres reales
+de keywords, parámetros y comandos se conservan. Libdoc y las exportaciones de consola
+se generan una sola vez y se comparten entre ambos idiomas; su contenido conserva el
+idioma de origen.
+
+Ejecuta `poetry run python scripts/build_docs.py` para construir el sitio bilingüe completo.
+Para una vista previa local después de construir, ejecuta
+`poetry run python -m http.server 8000 --directory site` y abre
+`http://localhost:8000/` o `http://localhost:8000/en/`. El selector utiliza las URLs de
+producción, así que verifica sus enlaces también en GitHub Pages.

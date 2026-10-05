@@ -8,3 +8,5 @@ build/
 dist/
 site/
 docs/keywords/index.html
+docs-en/assets/
+docs-en/keywords/
