@@ -10,6 +10,8 @@
 
 ### Fixed
 
+- Integrate the Themes gallery into the manual layout, use native code-copy controls and preserve Robot Framework syntax highlighting for every import. Show direct image links only on preview errors.
+
 - Pin the Linux quality job to Ubuntu 22.04 after repeated hosted runner allocation failures on ubuntu-latest.
 
 - Themes documentation now uses a searchable selector with Previous/Next controls, preview and copyable import instead of a tab row limited to 20 visible panels.

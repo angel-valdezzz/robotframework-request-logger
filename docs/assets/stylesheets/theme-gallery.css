@@ -1,10 +1,5 @@
 .md-typeset .theme-gallery [hidden] { display: none !important; }
-.md-typeset .theme-gallery {
-  border: 1px solid var(--md-default-fg-color--lighter);
-  border-radius: .4rem;
-  padding: 1rem;
-}
-.md-typeset .theme-picker { margin: 0 0 1rem; }
+.md-typeset .theme-picker { margin: 0 0 .5rem; }
 .md-typeset .theme-picker summary { cursor: pointer; padding: .65rem; }
 .md-typeset .theme-picker-menu { display: grid; gap: .4rem; padding: .65rem; }
 .md-typeset .theme-picker input,
@@ -16,21 +11,19 @@
 }
 .md-typeset .theme-gallery-nav { display: flex; align-items: center; gap: .5rem; }
 .md-typeset .theme-gallery-nav span { flex: 1; text-align: center; }
-.md-typeset .theme-gallery button {
+.md-typeset .theme-gallery-nav button {
   padding: .5rem .75rem; border: 1px solid var(--md-default-fg-color--lighter);
   border-radius: .2rem; cursor: pointer; font: inherit;
   color: var(--md-default-fg-color); background: var(--md-code-bg-color);
 }
-.md-typeset .theme-gallery button:disabled { opacity: .4; cursor: default; }
+.md-typeset .theme-gallery-nav button:disabled { opacity: .4; cursor: default; }
 .md-typeset .theme-gallery :focus-visible { outline: 2px solid var(--md-accent-fg-color); outline-offset: 2px; }
 .md-typeset .theme-gallery img { display: block; width: 100%; height: auto; }
-.md-typeset .theme-gallery pre { margin: .5rem 0; overflow-x: auto; }
-.md-typeset .theme-gallery-code > span { display: block; min-height: 1.5em; font-size: .7rem; }
+.md-typeset .theme-gallery h3 { margin: .75rem 0 .5rem; }
+.md-typeset .theme-gallery pre { margin: .75rem 0; overflow-x: auto; }
 @media (max-width: 480px) {
-  .md-typeset .theme-gallery { padding: .5rem; }
-  .md-typeset .theme-gallery button { padding: .5rem; }
+  .md-typeset .theme-gallery-nav button { padding: .5rem; }
 }
 /* Material styles details as admonitions; omit its decorative leading icon here. */
 .md-typeset .theme-picker summary { padding: .65rem 2rem .65rem .65rem; }
 .md-typeset .theme-picker summary::before { display: none; }
-.md-typeset .theme-gallery-code .md-clipboard { display: none; }

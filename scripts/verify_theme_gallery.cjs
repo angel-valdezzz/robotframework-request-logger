@@ -12,10 +12,6 @@ const { JSDOM } = require('jsdom');
     });
     const win = dom.window;
     const doc = win.document;
-    let copied = '';
-    Object.defineProperty(win.navigator, 'clipboard', { value: {
-      writeText: async text => { copied = text; },
-    }});
     win.eval(fs.readFileSync('docs/assets/theme-gallery.js', 'utf8'));
     const gallery = doc.querySelector('[data-theme-gallery]');
     const select = gallery.querySelector('select');
@@ -32,6 +28,7 @@ const { JSDOM } = require('jsdom');
       select.dispatchEvent(new win.Event('change'));
       assert.equal(gallery.querySelector('[data-theme-title]').textContent, name);
       assert(gallery.querySelector('[data-theme-import]').textContent.endsWith('syntax_theme=' + name));
+      assert(gallery.querySelector('[data-theme-import] span'));
       assert(preview.src.endsWith('/assets/themes/' + name + '.svg'));
       const local = path.join(folder, 'themes', preview.getAttribute('src'));
       assert(fs.existsSync(local), local);
@@ -58,14 +55,12 @@ const { JSDOM } = require('jsdom');
     picker.open = true;
     picker.dispatchEvent(new win.KeyboardEvent('keydown', {key: 'Escape'}));
     assert(!picker.open);
-    gallery.querySelector('[data-theme-copy]').click();
-    await new Promise(resolve => setImmediate(resolve));
-    assert(copied.endsWith('syntax_theme=one-dark'));
-    assert.equal(gallery.querySelector('[data-theme-copy-status]').textContent,
-                 language === 'es' ? 'Copiado' : 'Copied');
+    assert(!gallery.querySelector('[data-theme-copy]'));
+    assert(gallery.querySelector('[data-theme-import] span'));
+    assert(gallery.querySelector('[data-theme-image-link]').closest('[hidden]'));
     preview.dispatchEvent(new win.Event('error'));
     assert(!gallery.querySelector('[data-theme-image-error]').hidden);
     dom.window.close();
-    console.log(language + ': verified ' + names.length + ' previews, imports, search, navigation and copy.');
+    console.log(language + ': verified ' + names.length + ' previews, imports, search, navigation and syntax highlighting.');
   }
 })().catch(error => { console.error(error); process.exit(1); });
