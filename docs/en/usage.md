@@ -64,3 +64,11 @@ markup, and terminal control sequences are removed.
     direct Python usage, and pytest/unittest plugins are outside this version's scope.
     Abrupt process termination may lose pending blocks. The library does not write
     HTML or per-test files. Blocks are grouped, but Pabot has no guaranteed global order.
+
+## JSON themes
+
+Use `syntax_theme` to select JSON colors and the block background; HTTP and assertion colors stay unchanged. See [Themes](themes.md) for imports and visual comparisons.
+
+```robotframework
+Library    RequestLogger    mode=full    syntax_theme=monokai
+```

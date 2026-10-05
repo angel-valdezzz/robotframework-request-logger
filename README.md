@@ -87,3 +87,11 @@ Submit changes through a pull request with passing checks. Update both documenta
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## JSON themes
+
+Choose an installed Pygments theme from the import. Default: `monokai`. No theme file is needed. Compare every available style in [Themes](https://angel-valdezzz.github.io/robotframework-request-logger/themes/).
+
+```robotframework
+Library    RequestLogger    mode=full    syntax_theme=monokai
+```

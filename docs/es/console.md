@@ -58,3 +58,5 @@ reduce la salida de Robot pero conserva sus errores/advertencias. `--console non
 suprime su consola, no output.xml/log.html/report.html ni sus códigos de salida.
 Otras librerías todavía pueden imprimir directamente. RequestLogger también muestra
 el mensaje nativo final de FAIL/SKIP, incluso si el caso falló antes de registrar HTTP.
+
+Compara las paletas JSON en el apartado [Temas](themes.md).

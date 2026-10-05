@@ -1,6 +1,6 @@
 *** Settings ***
 Library           RequestsLibrary
-Library           RequestLogger    mode=${MODE}
+Library           RequestLogger    mode=${MODE}    syntax_theme=${SYNTAX_THEME}
 Library           Fixture.py
 
 Suite Setup       Start fixture
@@ -8,7 +8,8 @@ Suite Teardown    Stop API
 
 
 *** Variables ***
-${MODE}    summary
+${MODE}            summary
+${SYNTAX_THEME}    monokai
 
 
 *** Test Cases ***

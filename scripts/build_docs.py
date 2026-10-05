@@ -11,6 +11,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from bilingual_libdoc import generate
+from build_themes import generate as generate_themes
 from rich.console import Console
 from rich.terminal_theme import MONOKAI
 from robot import run
@@ -62,6 +63,7 @@ def main() -> None:
             clear=False,
         )
         (assets / f"console-{mode}.txt").write_text(text, encoding="utf-8")
+    generate_themes(ROOT)
     # Assets are shared sources; each build publishes its own relative copies.
     for language in ("en", "es"):
         shutil.copytree(assets, ROOT / "docs" / language / "assets", dirs_exist_ok=True)

@@ -29,8 +29,9 @@ from robot.api.deco import keyword, library
 from .models import Assertion, Exchange
 from .protection import Protector
 from .render import exchange
+from .theme import RequestLoggerTheme
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 _HEADERS = "Authorization,Proxy-Authorization,Cookie,Set-Cookie,X-API-Key"
 _FIELDS = "access_token,refresh_token,client_secret,password,token,api_key"
 
@@ -46,6 +47,7 @@ class RequestLogger:
         mode: str = "summary",
         redact_headers: str = _HEADERS,
         redact_body_fields: str = _FIELDS,
+        syntax_theme: str = "monokai",
     ) -> None:
         """Choose summary (default), failures or full.
 
@@ -57,12 +59,18 @@ class RequestLogger:
         fallback. Full text/JSON bodies are kept; binary/multipart bodies are summarized.
         XML field redaction is not supported. Redaction affects this console only.
 
+        syntax_theme selects an installed Pygments style (default: monokai), or
+        ansi_dark/ansi_light. It changes JSON colors and the JSON block background
+        only; HTTP/assertion colors stay unchanged. Empty detail sections are omitted.
+        An unknown theme raises ValueError with the available names. No theme file is needed.
+
         ```robotframework
-        Library    RequestLogger    mode=full
+        Library    RequestLogger    mode=full    syntax_theme=monokai
         ```
         """
         if mode not in {"summary", "failures", "full"}:
             raise ValueError("mode must be summary, failures or full")
+        self.theme = RequestLoggerTheme(syntax_theme=syntax_theme)
         self.mode = mode
         self.redact_headers = redact_headers
         self.redact_body_fields = redact_body_fields
@@ -79,7 +87,9 @@ class RequestLogger:
     def end_test(self, data: Any, result: Any) -> None:
         try:
             visible = [r for r in self.records if self.mode != "failures" or r.failed]
-            items = [exchange(r, self.mode != "summary", self.protector) for r in visible]
+            items = [
+                exchange(r, self.mode != "summary", self.protector, self.theme) for r in visible
+            ]
             if result.status in {"FAIL", "SKIP"}:
                 items.append(
                     Text(

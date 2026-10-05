@@ -11,6 +11,7 @@ from rich.console import Console
 
 from request_logger import RequestLogger
 from request_logger.protection import Protector, safe_text
+from request_logger.theme import available_themes
 
 
 def response(status: int = 200) -> requests.Response:
@@ -55,6 +56,45 @@ class CoreTests(unittest.TestCase):
         self.assertIn("Params", text)
         self.assertNotIn("\x1b", text)
         self.assertFalse(lib.active)
+
+    def test_all_themes_preserve_protected_plain_output(self) -> None:
+        expected = None
+        for theme in available_themes():
+            with self.subTest(theme=theme):
+                lib = RequestLogger("full", syntax_theme=theme)
+                lib.start_test(None, None)
+                lib.log_response("Themed", response())
+                text = self.render(lib, width=100)
+                for secret in ("secret-QUERY", "secret-TOKEN", "secret-PASSWORD"):
+                    self.assertNotIn(secret, text)
+                self.assertNotIn("\x1b", text)
+                if expected is None:
+                    expected = text
+                self.assertEqual(text, expected)
+
+    def test_unknown_theme_fails_at_import(self) -> None:
+        with self.assertRaisesRegex(ValueError, "Unknown syntax_theme.*Available themes"):
+            RequestLogger(syntax_theme="not-a-theme")
+        self.assertEqual(RequestLogger().theme.syntax_theme, "monokai")
+
+    def test_empty_sections_omitted_and_text_body_preserved(self) -> None:
+        lib = RequestLogger("full", syntax_theme="github-dark")
+        lib.start_test(None, None)
+        r = response()
+        r.request = requests.Request("GET", "https://example.test/").prepare()
+        r.headers.clear()
+        r.headers["Content-Type"] = "text/plain"
+        r._content = b"literal [bold]text[/bold]"
+        lib.log_response("Text", r)
+        text = self.render(lib, width=100)
+        self.assertNotIn("Request body", text)
+        self.assertNotIn("Request headers", text)
+        self.assertIn("Response body", text)
+        self.assertIn("literal [bold]text[/bold]", text)
+        lib.start_test(None, None)
+        r._content = b""
+        lib.log_response("Empty", r)
+        self.assertNotIn("Response body", self.render(lib))
 
     def test_failures_use_assertions_not_http_code(self) -> None:
         lib = RequestLogger("failures")
