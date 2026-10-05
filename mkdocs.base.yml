@@ -41,9 +41,9 @@ extra_javascript:
   - assets/external.js
 extra:
   alternate:
-    - name: Español
-      link: https://angel-valdezzz.github.io/robotframework-request-logger/
-      lang: es
     - name: English
-      link: https://angel-valdezzz.github.io/robotframework-request-logger/en/
+      link: https://angel-valdezzz.github.io/robotframework-request-logger/
       lang: en
+    - name: Español
+      link: https://angel-valdezzz.github.io/robotframework-request-logger/es/
+      lang: es

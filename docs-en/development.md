@@ -23,8 +23,9 @@ use permanent tokens. Configure the publisher before the first release.
 
 ## Maintain both documentation languages
 
-The Spanish source lives in `docs/`, and its existing public URLs are preserved.
-English lives in `docs-en/` and is published under `/en/`. Both configurations inherit
+The English source lives in `docs-en/` and is published at the site root by default.
+Spanish lives in `docs/` and is published under `/es/`. Existing `/en/` page links
+redirect to their English counterparts at the root. Both configurations inherit
 shared styles and the language selector from `mkdocs.base.yml`.
 
 When changing a guide, update its counterpart in the other language and keep matching
@@ -34,5 +35,5 @@ and shared by both language builds; their contents retain the source language.
 
 Run `poetry run python scripts/build_docs.py` to build the complete bilingual site.
 For a local preview after building, run `poetry run python -m http.server 8000 --directory site`
-and open `http://localhost:8000/` or `http://localhost:8000/en/`. The selector uses
+and open `http://localhost:8000/` or `http://localhost:8000/es/`. The selector uses
 production URLs, so verify its links on GitHub Pages as well.

@@ -1,30 +1,30 @@
 INHERIT: mkdocs.base.yml
-docs_dir: docs
+docs_dir: docs-en
 site_dir: site
-edit_uri: edit/main/docs/
+edit_uri: edit/main/docs-en/
 theme:
-  language: es
+  language: en
   palette:
     - scheme: default
       primary: teal
       accent: cyan
       toggle:
         icon: material/brightness-7
-        name: Modo oscuro
+        name: Dark mode
     - scheme: slate
       primary: teal
       accent: cyan
       toggle:
         icon: material/brightness-4
-        name: Modo claro
+        name: Light mode
 plugins:
   - search:
-      lang: es
+      lang: en
 nav:
-  - Inicio: index.md
-  - Manual de usuario:
-      - Uso y assertions: usage.md
-      - Modos y ejemplos visuales: console.md
-      - CI y compatibilidad: ci.md
-  - Referencia de keywords: keywords/index.html
-  - Desarrollo y publicación: development.md
+  - Home: index.md
+  - User guide:
+      - Usage and assertions: usage.md
+      - Modes and visual examples: console.md
+      - CI and compatibility: ci.md
+  - Keyword reference: keywords/index.html
+  - Development and publishing: development.md
