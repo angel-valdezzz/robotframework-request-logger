@@ -5,6 +5,19 @@ site_dir: build/site-en
 edit_uri: edit/main/docs-en/
 theme:
   language: en
+  palette:
+    - scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Dark mode
+    - scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Light mode
 plugins:
   - search:
       lang: en
