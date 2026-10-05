@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 from unittest.mock import patch
 
+from bilingual_libdoc import generate
 from rich.console import Console
 from rich.terminal_theme import MONOKAI
 from robot import run
@@ -20,10 +21,11 @@ ROOT = Path(__file__).resolve().parents[1]
 def main() -> None:
     assets = ROOT / "docs" / "assets"
     assets.mkdir(exist_ok=True)
-    keywords = ROOT / "docs" / "keywords" / "index.html"
-    keywords.parent.mkdir(exist_ok=True)
-    subprocess.run(
-        [sys.executable, "-m", "robot.libdoc", "RequestLogger", str(keywords)], check=True
+    generate(
+        "RequestLogger",
+        ROOT,
+        "keywords/index.html",
+        "https://angel-valdezzz.github.io/robotframework-request-logger/",
     )
     for mode in ("summary", "failures", "full"):
         captured: list[Console] = []
@@ -60,10 +62,9 @@ def main() -> None:
             clear=False,
         )
         (assets / f"console-{mode}.txt").write_text(text, encoding="utf-8")
-    # Both languages use the same generated console captures and Libdoc reference.
-    english = ROOT / "docs-en"
-    for directory in ("assets", "keywords"):
-        shutil.copytree(ROOT / "docs" / directory, english / directory, dirs_exist_ok=True)
+    # Assets are shared sources; each build publishes its own relative copies.
+    for language in ("en", "es"):
+        shutil.copytree(assets, ROOT / "docs" / language / "assets", dirs_exist_ok=True)
     for config in ("mkdocs.yml", "mkdocs.es.yml"):
         subprocess.run(
             [sys.executable, "-m", "mkdocs", "build", "--strict", "--config-file", config],

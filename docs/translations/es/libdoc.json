@@ -1,0 +1,26 @@
+{
+  "introduction": {
+    "source_sha256": "e6503273e99b8293e6013b7911de50f8933dce1bf091bd99b550fd79059245e0",
+    "text": "Salida HTTP en consola por caso, sin dependencia de RequestReporter."
+  },
+  "init:__init__": {
+    "source_sha256": "38367f2b1c710bb371d6fb01a8a26d83de7bda2250e699e5ff0b2e598b91ff41",
+    "text": "Elige summary (predeterminado), failures o full.\n\nsummary muestra todos los intercambios de forma breve; failures muestra detalles completos solo de assertions fallidas explícitamente o errores de request; full muestra todos los detalles. Un HTTP 4xx/5xx por sí solo no implica fallo del caso. Las assertions aceptan únicamente PASS/FAIL.\n\nLa biblioteca no ejecuta llamadas HTTP ni assertions y no cambia el modo de consola. En CI la salida es estática: Rich detecta las capacidades del terminal y utiliza texto plano cuando es necesario. Los cuerpos de texto/JSON se conservan completos; los binarios y multipart se resumen. No se admite ocultar campos XML. La protección solo afecta esta consola.\n\n```robotframework\nLibrary    RequestLogger    mode=full\n```"
+  },
+  "keyword:Log Assertion Result": {
+    "source_sha256": "bedb288ff4222515f07397789b293dfd8333c1eca8e9089e9d22d357c5004cdd",
+    "text": "Asocia un resultado PASS/FAIL ya obtenido; no ejecuta assertions.\n\nstatus debe ser PASS o FAIL. Se rechazan IDs desconocidos y SKIP. Solo registra evidencia: un FAIL registrado no cambia el resultado nativo de Robot. Ejecuta la assertion real de Robot y conserva su fallo al obtener el resultado.\n\n```robotframework\n${status}    ${message}=    Run Keyword And Ignore Error\n...    Should Be Equal As Integers    ${response.status_code}    200\nLog Assertion Result    ${id}    HTTP status    ${status}    ${message}\nIF    $status == 'FAIL'\n    Fail    ${message}\nEND\n```"
+  },
+  "keyword:Log Request": {
+    "source_sha256": "807b827a908800e91a50a6ab1203ec5176ff45b06cfc12c77e415e9e5894265c",
+    "text": "Registra un requests.PreparedRequest ya preparado y devuelve un ID local al caso.\n\nNo envía HTTP. Normalmente basta con Log Response. Pasar el mismo request preparado a Log Request y Log Response reutiliza el ID y un único registro. Un request sin response no se clasifica automáticamente como caso fallido.\n\n```robotframework\n${id}=    Log Request    Health    ${response.request}\n```"
+  },
+  "keyword:Log Request Error": {
+    "source_sha256": "ece91f5005dc71b762c720a8b0de923d739f49e0e05f318f7da7125ba8806bae",
+    "text": "Registra un intento HTTP sin response y devuelve su ID.\n\nNo inventa estatus HTTP ni cuerpo de respuesta. El argumento opcional request_id asocia el error con un Log Request previo. Esta keyword no falla el caso: propaga el fallo original después de registrarlo.\n\n```robotframework\nTRY\n    ${response}=    GET    ${URL}    timeout=10\nEXCEPT    AS    ${error}\n    Log Request Error    Health    GET    ${URL}    ${error}\n    Fail    ${error}\nEND\n```"
+  },
+  "keyword:Log Response": {
+    "source_sha256": "5886350a69537c4c42c467f953e30c42aeeb9a93c1acf82504487325b632a67d",
+    "text": "Registra un requests.Response existente y su request preparado; devuelve su ID.\n\nNo ejecuta HTTP. Registra el response antes de validar su estatus o analizar el JSON. Al terminar el caso se muestran headers, cuerpos, tiempo y URL según el modo elegido. Una llamada repetida con el mismo request preparado actualiza su registro existente.\n\n```robotframework\n${response}=    GET    ${URL}    expected_status=anything\n${id}=    Log Response    Health    ${response}\n```"
+  }
+}
