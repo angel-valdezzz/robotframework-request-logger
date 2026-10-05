@@ -59,3 +59,5 @@ reduces Robot output but keeps its errors and warnings. `--console none` suppres
 its console, without suppressing output.xml/log.html/report.html or changing exit codes.
 Other libraries can still print directly. RequestLogger also displays the final native
 FAIL/SKIP message, even when the test failed before recording HTTP traffic.
+
+Compare JSON palettes separately in [Themes](themes.md).

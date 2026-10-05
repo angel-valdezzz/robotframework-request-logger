@@ -64,3 +64,11 @@ interpreta como markup Rich y se eliminan secuencias de control del terminal.
     directo y plugins pytest/unittest no forman parte de esta versión. Una terminación
     abrupta del proceso puede perder bloques pendientes. No escribe HTML ni archivos
     por test. Los bloques se agrupan, pero Pabot no tiene orden global garantizado.
+
+## Temas del JSON
+
+Usa `syntax_theme` para elegir los colores y el fondo del bloque JSON; los colores HTTP y de assertions se conservan. Consulta [Temas](themes.md) para comparar e importar cada tema.
+
+```robotframework
+Library    RequestLogger    mode=full    syntax_theme=monokai
+```

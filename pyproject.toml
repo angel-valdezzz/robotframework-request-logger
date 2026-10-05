@@ -1,6 +1,6 @@
 [project]
 name = "robotframework-request-logger"
-version = "0.1.0"
+version = "0.2.0"
 description = "Protected HTTP request and response console logging for Robot Framework with Rich."
 authors = [{name = "Angel Molina"}]
 readme = "README.md"

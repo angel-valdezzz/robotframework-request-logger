@@ -87,3 +87,11 @@ Envía los cambios mediante un pull request con las verificaciones aprobadas. Ac
 ## Licencia
 
 MIT. Consulta [LICENSE](LICENSE).
+
+## Temas del JSON
+
+Elige un tema instalado de Pygments desde el import. Predeterminado: `monokai`. No necesitas un archivo. Compara los temas en [Temas](https://angel-valdezzz.github.io/robotframework-request-logger/es/themes/).
+
+```robotframework
+Library    RequestLogger    mode=full    syntax_theme=monokai
+```
