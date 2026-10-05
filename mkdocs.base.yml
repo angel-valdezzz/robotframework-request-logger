@@ -1,9 +1,10 @@
-site_name: Robot Framework Request Logger
+site_name: Request Logger
 site_url: https://angel-valdezzz.github.io/robotframework-request-logger/
 repo_url: https://github.com/angel-valdezzz/robotframework-request-logger
-repo_name: angel-valdezzz/robotframework-request-logger
+repo_name: Request Logger
 copyright: Robot Framework Request Logger · HTTP console evidence
 theme:
+  favicon: assets/favicon.svg
   font: false
   name: material
   custom_dir: overrides
@@ -19,19 +20,22 @@ theme:
     - navigation.footer
     - content.code.copy
   palette:
-    - scheme: default
-      primary: teal
-      accent: cyan
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-7
-    - scheme: slate
-      primary: teal
-      accent: cyan
+        icon: material/weather-night
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-sunny
 plugins:
   - search
 markdown_extensions:
+  - md_in_html
   - admonition
   - attr_list
   - pymdownx.details
@@ -55,3 +59,4 @@ extra:
 extra_css:
   - assets/stylesheets/standard.css
   - assets/stylesheets/theme-gallery.css
+  - assets/stylesheets/visual.css

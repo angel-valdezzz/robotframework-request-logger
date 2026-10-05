@@ -5,17 +5,19 @@ edit_uri: edit/main/docs/en/
 theme:
   language: en
   palette:
-    - scheme: default
-      primary: teal
-      accent: cyan
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-7
+        icon: material/weather-night
         name: Dark mode
-    - scheme: slate
-      primary: teal
-      accent: cyan
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-sunny
         name: Light mode
 plugins:
   - search:
