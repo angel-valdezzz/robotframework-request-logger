@@ -1,6 +1,9 @@
 """Generate Libdoc and reproducible visual captures of actual Robot/Rich output."""
 
+import html
 import io
+import json
+import os
 import shutil
 import subprocess
 import sys
@@ -61,13 +64,37 @@ def main() -> None:
     english = ROOT / "docs-en"
     for directory in ("assets", "keywords"):
         shutil.copytree(ROOT / "docs" / directory, english / directory, dirs_exist_ok=True)
-    for config in ("mkdocs.yml", "mkdocs.en.yml"):
+    for config in ("mkdocs.yml", "mkdocs.es.yml"):
         subprocess.run(
             [sys.executable, "-m", "mkdocs", "build", "--strict", "--config-file", config],
             cwd=ROOT,
             check=True,
         )
-    shutil.copytree(ROOT / "build" / "site-en", ROOT / "site" / "en")
+    site = ROOT / "site"
+    # Keep links shared during the pilot working after moving English to the root.
+    pages = list(site.rglob("*.html"))
+    for page in pages:
+        relative = page.relative_to(site)
+        if relative.name == "404.html":
+            continue
+        alias = site / "en" / relative
+        alias.parent.mkdir(parents=True, exist_ok=True)
+        target = os.path.relpath(page, alias.parent).replace(os.sep, "/")
+        if target.endswith("index.html"):
+            target = target.removesuffix("index.html")
+        escaped = html.escape(target, quote=True)
+        alias.write_text(
+            '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+            f'<meta http-equiv="refresh" content="0;url={escaped}">'
+            "<title>Documentation moved</title></head><body>"
+            f'<a href="{escaped}">Continue to the English documentation</a>'
+            f"<script>location.replace({json.dumps(target)} + location.search + location.hash);"
+            "</script></body></html>",
+            encoding="utf-8",
+        )
+    # Preserve previously shared console captures and download links as well.
+    shutil.copytree(site / "assets", site / "en" / "assets")
+    shutil.copytree(ROOT / "build" / "site-es", site / "es")
 
 
 if __name__ == "__main__":
