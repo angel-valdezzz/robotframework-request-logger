@@ -4,6 +4,9 @@ import html
 import io
 from pathlib import Path
 
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import RobotFrameworkLexer
 from rich.console import Console
 from rich.terminal_theme import MONOKAI
 
@@ -103,6 +106,18 @@ python -c "from request_logger.theme import available_themes; print(', '.join(av
     }
     # Put the default first, then every supported style without a hand-maintained list.
     ordered = ("monokai",) + tuple(name for name in themes if name != "monokai")
+    snippets = {
+        name: highlight(
+            "*** Settings ***\nLibrary    RequestLogger    mode=full    syntax_theme=" + name,
+            RobotFrameworkLexer(),
+            HtmlFormatter(nowrap=True),
+        ).rstrip("\n")
+        for name in ordered
+    }
+    templates = "".join(
+        f'<template data-theme-code="{name}">{snippet}</template>'
+        for name, snippet in snippets.items()
+    )
     labels = {
         "en": (
             "Choose a theme",
@@ -110,11 +125,9 @@ python -c "from request_logger.theme import available_themes; print(', '.join(av
             "Available themes",
             "Previous",
             "Next",
-            "Copy import",
-            "Copied",
             "No matching themes",
-            "Select the code to copy manually",
-            "Preview unavailable; open the image directly",
+            "Preview unavailable",
+            "Open preview",
         ),
         "es": (
             "Elige un tema",
@@ -122,21 +135,18 @@ python -c "from request_logger.theme import available_themes; print(', '.join(av
             "Temas disponibles",
             "Anterior",
             "Siguiente",
-            "Copiar import",
-            "Copiado",
             "No hay temas que coincidan",
-            "Selecciona el código para copiarlo manualmente",
-            "Vista previa no disponible; abre la imagen directamente",
+            "Vista previa no disponible",
+            "Abrir vista previa",
         ),
     }
     for language, introduction in introductions.items():
-        choose, search, available, prev, nxt, copy, copied, empty, manual, error = labels[language]
+        choose, search, available, prev, nxt, empty, error, open_preview = labels[language]
         options = "".join(
             f'<option value="{html.escape(name)}">{html.escape(name)}</option>' for name in ordered
         )
         links = " · ".join(f'<a href="../assets/themes/{name}.svg">{name}</a>' for name in ordered)
-        gallery = f"""<div class="theme-gallery" data-theme-gallery
- data-copied="{copied}" data-manual="{manual}">
+        gallery = f"""<div class="theme-gallery" data-theme-gallery>
   <details class="theme-picker" hidden>
     <summary>{choose}: <strong data-theme-current>monokai</strong></summary>
     <div class="theme-picker-menu">
@@ -155,14 +165,13 @@ python -c "from request_logger.theme import available_themes; print(', '.join(av
   <h3 data-theme-title>monokai</h3>
   <img data-theme-preview src="../assets/themes/monokai.svg" alt="monokai"
        data-base="../assets/themes/" width="1100">
-  <p data-theme-image-error hidden role="alert">{error}</p>
-  <p><a data-theme-image-link href="../assets/themes/monokai.svg">monokai.svg</a></p>
-  <div class="theme-gallery-code">
-    <button type="button" data-theme-copy hidden>{copy}</button>
-    <pre><code data-theme-import>*** Settings ***
-Library    RequestLogger    mode=full    syntax_theme=monokai</code></pre>
-    <span data-theme-copy-status role="status" aria-live="polite"></span>
+  <p data-theme-image-error hidden role="alert">{error}.
+    <a data-theme-image-link href="../assets/themes/monokai.svg">{open_preview}</a>
+  </p>
+  <div class="theme-gallery-code highlight">
+    <pre><code data-theme-import>{snippets["monokai"]}</code></pre>
   </div>
+  {templates}
   <noscript><p>{available}: {links}</p></noscript>
 </div>
 """
