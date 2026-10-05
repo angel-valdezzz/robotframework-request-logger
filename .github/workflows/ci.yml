@@ -36,6 +36,14 @@ jobs:
       - run: poetry run mypy src
       - run: poetry run python scripts/verify.py
       - run: poetry run python scripts/build_docs.py
+      - name: Set up Node for Libdoc UI verification
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Verify native bilingual Libdoc menu
+        run: |
+          npm install --prefix build/libdoc-ui jsdom@26.1.0 --no-audit --no-fund
+          NODE_PATH="$PWD/build/libdoc-ui/node_modules" node scripts/verify_libdoc_ui.cjs keywords/index.html
       - run: poetry build
       - run: poetry run twine check dist/*
       - run: poetry run python scripts/wheel_smoke.py

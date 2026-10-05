@@ -41,4 +41,4 @@ producción, así que verifica sus enlaces también en GitHub Pages.
 Las traducciones de Libdoc viven en `docs/translations/es/libdoc.json`. Cada entrada
 conserva el SHA-256 del texto original; la compilación rechaza traducciones faltantes
 o desactualizadas. Los nombres de keywords, argumentos, tipos y valores por defecto
-se mantienen iguales. Los controles propios de Libdoc permanecen en inglés.
+se mantienen iguales. El selector nativo de Libdoc cambia los controles y las descripciones de keywords.
