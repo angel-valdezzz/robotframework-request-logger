@@ -1,16 +1,33 @@
 # Robot Framework Request Logger
 
-HTTP request/response logging in the console with Rich. Independent of RequestReporter:
-this library sends no HTTP requests and executes no assertions. Robot's console and
-exit code remain unchanged. Output is buffered until each test finishes.
+**HTTP requests, responses and assertion results in your Robot Framework console, powered by Rich.**
 
-[Manual de usuario](https://angel-valdezzz.github.io/robotframework-request-logger/)
-· [Keywords](https://angel-valdezzz.github.io/robotframework-request-logger/keywords/)
-· [Ejemplos visuales](https://angel-valdezzz.github.io/robotframework-request-logger/console/)
+**English** · [Español](README.es.md)
+
+[User guide](https://angel-valdezzz.github.io/robotframework-request-logger/) · [Keyword reference](https://angel-valdezzz.github.io/robotframework-request-logger/keywords/) · [PyPI](https://pypi.org/project/robotframework-request-logger/) · [Visual examples](https://angel-valdezzz.github.io/robotframework-request-logger/console/)
+
+## Features
+
+- Three output modes: `summary`, `failures` and `full`.
+- Existing RequestsLibrary requests and responses, linked to recorded assertion results.
+- Protection for configured headers, fields and known secrets.
+- Static output with terminal detection and plain text fallback for CI.
+
+Output is buffered until each test ends. The library sends no HTTP requests and executes no assertions. It works independently of RequestReporter and preserves Robot's native console, output files and exit code.
+
+## Installation
+
+Python 3.12+ and Robot Framework 7.5+.
 
 ```bash
-poetry add robotframework-request-logger
+pip install robotframework-request-logger robotframework-requests
+# Or, with Poetry:
+poetry add robotframework-request-logger robotframework-requests
 ```
+
+RequestsLibrary is installed separately from this package.
+
+## Quick start
 
 ```robotframework
 *** Settings ***
@@ -21,34 +38,52 @@ Library    RequestLogger    mode=summary
 Health
     ${response}=    GET    http://localhost:8000/health    expected_status=anything
     ${id}=    Log Response    Health    ${response}
-    Should Be Equal As Integers    ${response.status_code}    200
-    Log Assertion Result    ${id}    HTTP status    PASS
+    ${status}    ${message}=    Run Keyword And Ignore Error
+    ...    Should Be Equal As Integers    ${response.status_code}    200
+    Log Assertion Result    ${id}    HTTP status    ${status}    ${message}
+    IF    $status == 'FAIL'
+        Fail    ${message}
+    END
 ```
 
-`mode=summary` shows every exchange briefly; `failures` shows full details of explicitly
-failed assertions or request errors; `full` shows every exchange in detail. An HTTP
-4xx/5xx response alone does not make a test fail. Assertions accept PASS/FAIL only.
+Use an available service URL. HTTP 4xx/5xx alone does not fail the test. `Log Assertion Result` records an existing PASS/FAIL result; preserve the actual assertion failure as shown above.
 
-Default operation complements Robot's normal console. For examples showing only this
-library, use `poetry run robot --console none tests/visual.robot`. `quiet` still permits
-Robot errors and warnings. Native `output.xml`, `log.html` and exit codes are preserved.
+## Configuration and limitations
 
-## Development
+| Mode | Output |
+| --- | --- |
+| `summary` | Brief output for every exchange; default |
+| `failures` | Full details for explicitly failed assertions or request errors |
+| `full` | Full details for every exchange |
+
+Configure `redact_headers` and `redact_body_fields` when importing the library. Protection affects this library's output only; Robot and RequestsLibrary logs remain independent. JSON/text bodies are complete; binary/multipart bodies are summarized. XML field redaction is not supported.
+
+Buffering uses memory; abrupt termination may lose pending logs. Pabot workers can interleave output, with no cross-process ordering guarantee. Direct Python usage and pytest/unittest integrations are outside this version.
+
+## Examples
+
+Keep Robot's normal console for regular execution. To reproduce the visual examples with only this library's console output:
+
+```bash
+poetry run robot --console none tests/visual.robot
+```
+
+This example intentionally fails and returns exit code 1. [See the real console exports](https://angel-valdezzz.github.io/robotframework-request-logger/console/).
+
+## Development and contribution
 
 ```bash
 poetry install
 poetry run python scripts/verify.py
 poetry run ruff check .
-poetry run ruff format .
+poetry run ruff format --check .
 poetry run robocop check tests
-poetry run robocop format tests
 poetry run python scripts/build_docs.py
 poetry build
 ```
 
-Known limits: buffering is in memory and output occurs at end_test. Abrupt termination
-may lose pending logs. Pabot workers can interleave output; no cross-process ordering
-is promised. JSON/text bodies are complete; binary/multipart bodies are summarized.
-XML field redaction is not supported. Protection affects this library's output only,
-not RequestsLibrary/Robot's own logs. Typer and pytest/unittest integration are outside
-this version. Unit tests of implementation use Python's standard test tools.
+Submit changes through a pull request with passing checks. Update both documentation languages. Libdoc translations live in `docs/translations/es/libdoc.json`; the build rejects missing or outdated entries. Preview the complete site with `python -m http.server 8000 --directory site`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

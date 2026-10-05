@@ -23,15 +23,16 @@ use permanent tokens. Configure the publisher before the first release.
 
 ## Maintain both documentation languages
 
-The English source lives in `docs-en/` and is published at the site root by default.
-Spanish lives in `docs/` and is published under `/es/`. Existing `/en/` page links
+The English source lives in `docs/en/` and is published at the site root by default.
+Spanish lives in `docs/es/` and is published under `/es/`. Existing `/en/` page links
 redirect to their English counterparts at the root. Both configurations inherit
 shared styles and the language selector from `mkdocs.base.yml`.
 
 When changing a guide, update its counterpart in the other language and keep matching
 filenames so the selector can retain the current page. Keep actual keyword names,
-parameters, and commands unchanged. Libdoc and console exports are generated once
-and shared by both language builds; their contents retain the source language.
+parameters, and commands unchanged. Console exports are shared. Libdoc descriptions are translated using
+`docs/translations/es/libdoc.json`; builds reject missing or outdated entries.
+Keep keyword names, argument names, types and defaults unchanged.
 
 Run `poetry run python scripts/build_docs.py` to build the complete bilingual site.
 For a local preview after building, run `poetry run python -m http.server 8000 --directory site`
