@@ -4,6 +4,19 @@ site_dir: site
 edit_uri: edit/main/docs/
 theme:
   language: es
+  palette:
+    - scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Modo oscuro
+    - scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
 plugins:
   - search:
       lang: es
