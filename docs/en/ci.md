@@ -20,3 +20,11 @@ redirected. Width follows Rich's detection and fallback.
 The manual's images do not establish visual compatibility with every terminal.
 Output failures caused by OSError/UnicodeError produce warnings without changing the
 result of the test. The library does not alter the native console or exit codes.
+
+## GitHub Actions runners
+
+The Linux quality job uses `ubuntu-22.04` as an explicit alternative after repeated
+runner allocation failures on `ubuntu-latest`. A job cancelled before its first step
+with “The job was not acquired by Runner” indicates a hosted infrastructure failure,
+not a test failure. Check deployment and quality workflows separately. This pinned
+image does not guarantee runner availability.

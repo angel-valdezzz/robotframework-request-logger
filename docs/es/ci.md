@@ -20,3 +20,11 @@ ANSI cuando la salida está redirigida. El ancho sigue la detección de Rich y s
 Las imágenes del manual no demuestran compatibilidad visual con todos los terminales.
 Los fallos de salida por OSError/UnicodeError se advierten sin cambiar el resultado
 del test. La librería no modifica la consola nativa ni los códigos de salida.
+
+## GitHub Actions runners
+
+El job de calidad Linux usa `ubuntu-22.04` como alternativa explícita después de
+fallos repetidos al asignar runners con `ubuntu-latest`. Si se cancela antes del
+primer paso con “The job was not acquired by Runner”, el fallo es de infraestructura
+y no de las pruebas. Revisa por separado la publicación y el workflow de calidad.
+Fijar esta imagen no garantiza la disponibilidad de runners.

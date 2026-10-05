@@ -10,6 +10,8 @@
 
 ### Fixed
 
+- Pin the Linux quality job to Ubuntu 22.04 after repeated hosted runner allocation failures on ubuntu-latest.
+
 - Themes documentation now uses a searchable selector with Previous/Next controls, preview and copyable import instead of a tab row limited to 20 visible panels.
 
 ### Changed

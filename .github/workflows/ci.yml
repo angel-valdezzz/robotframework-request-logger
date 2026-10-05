@@ -20,7 +20,8 @@ jobs:
       - run: poetry install --no-interaction
       - run: poetry run python scripts/verify.py
   verify:
-    runs-on: ubuntu-latest
+    # Explicit alternative after repeated ubuntu-latest provisioning failures.
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
