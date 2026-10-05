@@ -5,6 +5,7 @@ repo_name: angel-valdezzz/robotframework-request-logger
 copyright: Robot Framework Request Logger · HTTP console evidence
 theme:
   name: material
+  custom_dir: overrides
   icon:
     logo: material/console
     repo: fontawesome/brands/github
