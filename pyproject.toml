@@ -27,7 +27,7 @@ types-requests = "*"
 twine = ">=6,<7"
 
 [tool.poetry.group.docs.dependencies]
-mkdocs-material = ">=9.6,<10"
+mkdocs-material = ">=9.7,<10"
 
 [tool.ruff]
 line-length = 100

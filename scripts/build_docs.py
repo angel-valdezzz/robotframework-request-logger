@@ -1,6 +1,7 @@
 """Generate Libdoc and reproducible visual captures of actual Robot/Rich output."""
 
 import io
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -56,7 +57,17 @@ def main() -> None:
             clear=False,
         )
         (assets / f"console-{mode}.txt").write_text(text, encoding="utf-8")
-    subprocess.run([sys.executable, "-m", "mkdocs", "build", "--strict"], cwd=ROOT, check=True)
+    # Both languages use the same generated console captures and Libdoc reference.
+    english = ROOT / "docs-en"
+    for directory in ("assets", "keywords"):
+        shutil.copytree(ROOT / "docs" / directory, english / directory, dirs_exist_ok=True)
+    for config in ("mkdocs.yml", "mkdocs.en.yml"):
+        subprocess.run(
+            [sys.executable, "-m", "mkdocs", "build", "--strict", "--config-file", config],
+            cwd=ROOT,
+            check=True,
+        )
+    shutil.copytree(ROOT / "build" / "site-en", ROOT / "site" / "en")
 
 
 if __name__ == "__main__":

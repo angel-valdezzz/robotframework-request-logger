@@ -1,0 +1,38 @@
+# Development and publishing
+
+Poetry manages dependencies and builds WHL/sdist distributions. Ruff checks Python,
+RoboCop checks Robot, and mypy checks implementation types. CI runs real tests using a
+local API, protection/rendering tests, and WHL acceptance in a clean environment.
+
+```bash
+poetry install
+poetry run python scripts/verify.py
+poetry run python scripts/build_docs.py
+poetry build
+poetry run twine check dist/*
+```
+
+build_docs generates Libdoc and SVG examples from tests/visual.robot, then builds both
+Spanish and English documentation in strict mode. Pages publishes a single site
+containing the manual, reference, and visual examples.
+
+Changes enter main through a PR with passing CI. release.yml validates the tag and its
+ancestry from main. PyPI uses Trusted Publishing with repository
+robotframework-request-logger, workflow release.yml, and environment pypi; it does not
+use permanent tokens. Configure the publisher before the first release.
+
+## Maintain both documentation languages
+
+The Spanish source lives in `docs/`, and its existing public URLs are preserved.
+English lives in `docs-en/` and is published under `/en/`. Both configurations inherit
+shared styles and the language selector from `mkdocs.base.yml`.
+
+When changing a guide, update its counterpart in the other language and keep matching
+filenames so the selector can retain the current page. Keep actual keyword names,
+parameters, and commands unchanged. Libdoc and console exports are generated once
+and shared by both language builds; their contents retain the source language.
+
+Run `poetry run python scripts/build_docs.py` to build the complete bilingual site.
+For a local preview after building, run `poetry run python -m http.server 8000 --directory site`
+and open `http://localhost:8000/` or `http://localhost:8000/en/`. The selector uses
+production URLs, so verify its links on GitHub Pages as well.

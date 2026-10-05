@@ -1,0 +1,18 @@
+INHERIT: mkdocs.base.yml
+site_url: https://angel-valdezzz.github.io/robotframework-request-logger/en/
+docs_dir: docs-en
+site_dir: build/site-en
+edit_uri: edit/main/docs-en/
+theme:
+  language: en
+plugins:
+  - search:
+      lang: en
+nav:
+  - Home: index.md
+  - User guide:
+      - Usage and assertions: usage.md
+      - Modes and visual examples: console.md
+      - CI and compatibility: ci.md
+  - Keyword reference: keywords/index.html
+  - Development and publishing: development.md
