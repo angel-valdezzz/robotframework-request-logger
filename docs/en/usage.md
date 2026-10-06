@@ -69,6 +69,7 @@ markup, and terminal control sequences are removed.
 
 Use `syntax_theme` to select JSON colors and the block background; HTTP and assertion colors stay unchanged. See [Themes](themes.md) for imports and visual comparisons.
 
-```robotframework hl_lines="1"
+```robotframework hl_lines="2"
+*** Settings ***
 Library    RequestLogger    mode=full    syntax_theme=monokai
 ```
