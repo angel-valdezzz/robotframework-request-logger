@@ -1,14 +1,14 @@
 site_name: Request Logger
 site_url: https://angel-valdezzz.github.io/robotframework-request-logger/
 repo_url: https://github.com/angel-valdezzz/robotframework-request-logger
-repo_name: Request Logger
+repo_name: RequestLogger
 copyright: Robot Framework Request Logger · HTTP console evidence
 theme:
   logo: assets/logo.svg
   favicon: assets/favicon.svg
   font: false
   name: material
-  custom_dir: overrides
+  custom_dir: docs/overrides
   icon:
       repo: fontawesome/brands/github
   features:
@@ -45,7 +45,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 extra_javascript:
-  - assets/external.js
+  - assets/keyword-links.js
   - assets/theme-gallery.js
 extra:
   alternate:

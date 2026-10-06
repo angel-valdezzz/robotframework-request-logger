@@ -83,7 +83,7 @@ poetry run python scripts/verify.py
 poetry run ruff check .
 poetry run ruff format --check .
 poetry run robocop check tests
-poetry run python scripts/build_docs.py
+poetry run python docs/scripts/build_docs.py
 poetry build
 ```
 

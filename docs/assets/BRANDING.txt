@@ -11,3 +11,5 @@ Primary #2459A8, secondary #284073, accent #B4E86D.
 The wordmark lettering uses DejaVu Sans Bold (Bitstream Vera/DejaVu license; see FONT-LICENSE.txt).
 
 Dark wordmarks use lighter shades of the same hues for contrast.
+
+PyPI button: official logo-small.svg from https://github.com/pypi/warehouse (warehouse/static/images/logo-small.svg).

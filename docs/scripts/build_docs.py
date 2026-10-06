@@ -16,7 +16,7 @@ from rich.console import Console
 from rich.terminal_theme import MONOKAI
 from robot import run
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def main() -> None:
@@ -67,7 +67,7 @@ def main() -> None:
     # Assets are shared sources; each build publishes its own relative copies.
     for language in ("en", "es"):
         shutil.copytree(assets, ROOT / "docs" / language / "assets", dirs_exist_ok=True)
-    for config in ("mkdocs.yml", "mkdocs.es.yml"):
+    for config in ("mkdocs.yml", "docs/config/es.yml"):
         subprocess.run(
             [sys.executable, "-m", "mkdocs", "build", "--strict", "--config-file", config],
             cwd=ROOT,

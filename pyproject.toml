@@ -27,6 +27,7 @@ types-requests = "*"
 twine = ">=6,<7"
 
 [tool.poetry.group.docs.dependencies]
+pygments = ">=2.19,<3"
 mkdocs-material = ">=9.7,<10"
 
 [tool.ruff]

@@ -38,7 +38,29 @@ _FIELDS = "access_token,refresh_token,client_secret,password,token,api_key"
 
 @library(scope="GLOBAL", version=__version__, doc_format="MARKDOWN", auto_keywords=False)
 class RequestLogger:
-    """Case-local HTTP console output with no dependency on RequestReporter."""
+    """Display HTTP exchanges and assertion results in the test's console output.
+
+    Import alongside RequestsLibrary. This library records completed responses;
+    it does not send requests, run assertions or create HTML reports. Output is
+    buffered until the test finishes, allowing secrets learned later to be redacted.
+
+    ```robotframework
+    *** Settings ***
+    Library    RequestsLibrary
+    Library    RequestLogger
+
+    *** Test Cases ***
+    Health
+        ${response}=    GET    ${URL}    expected_status=anything
+        ${id}=    Log Response    Health    ${response}
+        Should Be Equal As Integers    ${response.status_code}    200
+        Log Assertion Result    ${id}    HTTP status    PASS
+    ```
+
+    Choose `mode=summary`, `failures` or `full` when importing; see [Importing]
+    for JSON syntax themes and redaction options. Redaction affects this console
+    only, not Robot's or RequestsLibrary's own logs.
+    """
 
     ROBOT_LISTENER_API_VERSION = 3
 

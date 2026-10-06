@@ -1,0 +1,33 @@
+INHERIT: base.yml
+docs_dir: docs/en
+site_dir: site
+edit_uri: edit/main/docs/en/
+theme:
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Light mode
+plugins:
+  - search:
+      lang: en
+nav:
+  - Home: index.md
+  - User guide:
+      - Usage and assertions: usage.md
+      - CI and compatibility: ci.md
+  - Keyword reference: keywords/index.html
+  - Development and publishing: development.md
+  - Visual examples: console.md
+  - Themes: themes.md

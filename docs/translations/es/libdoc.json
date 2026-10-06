@@ -1,7 +1,7 @@
 {
   "introduction": {
-    "source_sha256": "e6503273e99b8293e6013b7911de50f8933dce1bf091bd99b550fd79059245e0",
-    "text": "Salida HTTP en consola por caso, sin dependencia de RequestReporter."
+    "source_sha256": "da77249d0da7f43fd8c27b38d093e880df0065bf050a8d15c89ee4dce4abf1ad",
+    "text": "Muestra intercambios HTTP y resultados de validaciones en la consola del caso.\n\nImporta junto con RequestsLibrary. Registra respuestas ya obtenidas; no envía peticiones, ejecuta validaciones ni crea reportes HTML. La salida se conserva hasta finalizar el caso para ocultar también secretos conocidos más tarde.\n\n```robotframework\n*** Settings ***\nLibrary    RequestsLibrary\nLibrary    RequestLogger\n\n*** Test Cases ***\nHealth\n    ${response}=    GET    ${URL}    expected_status=anything\n    ${id}=    Log Response    Health    ${response}\n    Should Be Equal As Integers    ${response.status_code}    200\n    Log Assertion Result    ${id}    HTTP status    PASS\n```\n\nElige `mode=summary`, `failures` o `full` al importar; consulta [Importing] para los temas de sintaxis JSON y las opciones de ocultación. La ocultación afecta solo a esta consola, no a los logs propios de Robot o RequestsLibrary."
   },
   "init:__init__": {
     "source_sha256": "aac884c3e90e96a021e11da380fc84ba124ebc12db1571306ec145710047658d",
