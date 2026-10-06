@@ -1,4 +1,9 @@
 <div class="hero" markdown>
+<div class="project-brand">
+<img class="project-brand-light" src="assets/logo-wordmark.svg" alt="Request Logger">
+<img class="project-brand-dark" src="assets/logo-wordmark-dark.svg" alt="Request Logger">
+</div>
+
 
 # HTTP visibility in your console
 

@@ -1,5 +1,10 @@
 # Robot Framework Request Logger
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-wordmark-dark.svg">
+  <img src="docs/assets/logo-wordmark.svg" alt="Request Logger" width="380">
+</picture>
+
 **HTTP requests, responses and assertion results in your Robot Framework console, powered by Rich.**
 
 **English** · [Español](README.es.md)

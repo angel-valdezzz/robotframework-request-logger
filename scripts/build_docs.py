@@ -96,8 +96,8 @@ def main() -> None:
             encoding="utf-8",
         )
     # Preserve previously shared console captures and download links as well.
-    shutil.copytree(site / "assets", site / "en" / "assets")
-    shutil.copytree(ROOT / "build" / "site-es", site / "es")
+    shutil.copytree(site / "assets", site / "en" / "assets", dirs_exist_ok=True)
+    shutil.copytree(ROOT / "build" / "site-es", site / "es", dirs_exist_ok=True)
 
 
 if __name__ == "__main__":
