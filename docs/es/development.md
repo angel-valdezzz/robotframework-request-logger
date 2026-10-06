@@ -7,7 +7,7 @@ pruebas de protección/render y aceptación del WHL en un entorno limpio.
 ```bash
 poetry install
 poetry run python scripts/verify.py
-poetry run python scripts/build_docs.py
+poetry run python docs/scripts/build_docs.py
 poetry build
 poetry run twine check dist/*
 ```
@@ -25,14 +25,14 @@ permanentes. Configurar el publisher es un paso previo a la primera publicación
 El inglés vive en `docs/en/` y se publica por defecto en la raíz del sitio.
 El contenido en español vive en `docs/es/` y se publica bajo `/es/`. Los enlaces anteriores
 de `/en/` redirigen a sus páginas equivalentes en la raíz. Las dos configuraciones heredan
-los estilos y el selector de idiomas de `mkdocs.base.yml`.
+los estilos y el selector de idiomas de `docs/config/base.yml`.
 
 Al modificar una guía, actualiza su equivalente en el otro idioma y conserva los mismos
 nombres de archivo para que el selector mantenga la página actual. Los nombres reales
 de keywords, parámetros y comandos se conservan. Las exportaciones de consola se comparten entre ambos idiomas. Libdoc genera
 una referencia con descripciones en inglés y otra en español.
 
-Ejecuta `poetry run python scripts/build_docs.py` para construir el sitio bilingüe completo.
+Ejecuta `poetry run python docs/scripts/build_docs.py` para construir el sitio bilingüe completo.
 Para una vista previa local después de construir, ejecuta
 `poetry run python -m http.server 8000 --directory site` y abre
 `http://localhost:8000/` o `http://localhost:8000/es/`. El selector utiliza las URLs de

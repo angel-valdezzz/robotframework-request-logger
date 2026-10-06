@@ -181,4 +181,4 @@ python -c "from request_logger.theme import available_themes; print(', '.join(av
 
 
 if __name__ == "__main__":
-    generate(Path(__file__).resolve().parents[1])
+    generate(Path(__file__).resolve().parents[2])
