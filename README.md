@@ -11,6 +11,13 @@
 
 [User guide](https://angel-valdezzz.github.io/robotframework-request-logger/) · [Keyword reference](https://angel-valdezzz.github.io/robotframework-request-logger/keywords/) · [PyPI](https://pypi.org/project/robotframework-request-logger/) · [Visual examples](https://angel-valdezzz.github.io/robotframework-request-logger/console/)
 
+
+[![PyPI](https://img.shields.io/pypi/v/robotframework-request-logger?logo=pypi)](https://pypi.org/project/robotframework-request-logger/)
+![Python](https://img.shields.io/pypi/pyversions/robotframework-request-logger?logo=python)
+![Robot Framework](https://img.shields.io/badge/Robot_Framework-compatible-00A6A6?logo=robotframework)
+[![License](https://img.shields.io/github/license/angel-valdezzz/robotframework-request-logger)](LICENSE)
+[![CI](https://github.com/angel-valdezzz/robotframework-request-logger/actions/workflows/ci.yml/badge.svg)](https://github.com/angel-valdezzz/robotframework-request-logger/actions/workflows/ci.yml)
+
 ## Features
 
 - Three output modes: `summary`, `failures` and `full`.
