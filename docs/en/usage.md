@@ -1,6 +1,6 @@
 # Usage and assertions
 
-```robotframework
+```robotframework hl_lines="8 11-13"
 *** Settings ***
 Library    RequestsLibrary
 Library    RequestLogger    mode=summary
@@ -30,7 +30,7 @@ assertions, use Robot's assertions normally: the final test status remains visib
 
 ## Error without a response
 
-```robotframework
+```robotframework hl_lines="9-11 13"
 *** Settings ***
 Library    RequestsLibrary
 Library    RequestLogger
@@ -69,6 +69,6 @@ markup, and terminal control sequences are removed.
 
 Use `syntax_theme` to select JSON colors and the block background; HTTP and assertion colors stay unchanged. See [Themes](themes.md) for imports and visual comparisons.
 
-```robotframework
+```robotframework hl_lines="1"
 Library    RequestLogger    mode=full    syntax_theme=monokai
 ```
