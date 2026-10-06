@@ -9,7 +9,7 @@
 
 **English** · [Español](README.es.md)
 
-[User guide](https://angel-valdezzz.github.io/robotframework-request-logger/) · [Keyword reference](https://angel-valdezzz.github.io/robotframework-request-logger/keywords/) · [PyPI](https://pypi.org/project/robotframework-request-logger/) · [Visual examples](https://angel-valdezzz.github.io/robotframework-request-logger/console/)
+[User guide ↗](https://angel-valdezzz.github.io/robotframework-request-logger/) · [Keyword reference ↗](https://angel-valdezzz.github.io/robotframework-request-logger/keywords/) · [PyPI ↗](https://pypi.org/project/robotframework-request-logger/) · [Visual examples ↗](https://angel-valdezzz.github.io/robotframework-request-logger/console/)
 
 
 [![PyPI](https://img.shields.io/pypi/v/robotframework-request-logger?logo=pypi)](https://pypi.org/project/robotframework-request-logger/)
@@ -80,7 +80,7 @@ Keep Robot's normal console for regular execution. To reproduce the visual examp
 poetry run robot --console none tests/visual.robot
 ```
 
-This example intentionally fails and returns exit code 1. [See the real console exports](https://angel-valdezzz.github.io/robotframework-request-logger/console/).
+This example intentionally fails and returns exit code 1. [See the real console exports ↗](https://angel-valdezzz.github.io/robotframework-request-logger/console/).
 
 ## Development and contribution
 
@@ -102,7 +102,7 @@ MIT. See [LICENSE](LICENSE).
 
 ## JSON themes
 
-Choose an installed Pygments theme from the import. Default: `monokai`. No theme file is needed. Compare every available style in [Themes](https://angel-valdezzz.github.io/robotframework-request-logger/themes/).
+Choose an installed Pygments theme from the import. Default: `monokai`. No theme file is needed. Compare every available style in [Themes ↗](https://angel-valdezzz.github.io/robotframework-request-logger/themes/).
 
 ```robotframework
 Library    RequestLogger    mode=full    syntax_theme=monokai

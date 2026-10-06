@@ -9,7 +9,7 @@
 
 [English](README.md) · **Español**
 
-[Manual de usuario](https://angel-valdezzz.github.io/robotframework-request-logger/es/) · [Referencia de keywords](https://angel-valdezzz.github.io/robotframework-request-logger/es/keywords/) · [PyPI](https://pypi.org/project/robotframework-request-logger/) · [Ejemplos visuales](https://angel-valdezzz.github.io/robotframework-request-logger/es/console/)
+[Manual de usuario ↗](https://angel-valdezzz.github.io/robotframework-request-logger/es/) · [Referencia de keywords ↗](https://angel-valdezzz.github.io/robotframework-request-logger/es/keywords/) · [PyPI ↗](https://pypi.org/project/robotframework-request-logger/) · [Ejemplos visuales ↗](https://angel-valdezzz.github.io/robotframework-request-logger/es/console/)
 
 
 [![PyPI](https://img.shields.io/pypi/v/robotframework-request-logger?logo=pypi)](https://pypi.org/project/robotframework-request-logger/)
@@ -80,7 +80,7 @@ Conserva la consola normal de Robot para ejecuciones habituales. Para reproducir
 poetry run robot --console none tests/visual.robot
 ```
 
-Este ejemplo falla deliberadamente y devuelve el código 1. [Consulta las exportaciones reales de consola](https://angel-valdezzz.github.io/robotframework-request-logger/es/console/).
+Este ejemplo falla deliberadamente y devuelve el código 1. [Consulta las exportaciones reales de consola ↗](https://angel-valdezzz.github.io/robotframework-request-logger/es/console/).
 
 ## Desarrollo y contribución
 
@@ -102,7 +102,7 @@ MIT. Consulta [LICENSE](LICENSE).
 
 ## Temas del JSON
 
-Elige un tema instalado de Pygments desde el import. Predeterminado: `monokai`. No necesitas un archivo. Compara los temas en [Temas](https://angel-valdezzz.github.io/robotframework-request-logger/es/themes/).
+Elige un tema instalado de Pygments desde el import. Predeterminado: `monokai`. No necesitas un archivo. Compara los temas en [Temas ↗](https://angel-valdezzz.github.io/robotframework-request-logger/es/themes/).
 
 ```robotframework
 Library    RequestLogger    mode=full    syntax_theme=monokai
