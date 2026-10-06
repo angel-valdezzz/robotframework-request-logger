@@ -1,6 +1,6 @@
 # Uso y assertions
 
-```robotframework
+```robotframework hl_lines="8 11-13"
 *** Settings ***
 Library    RequestsLibrary
 Library    RequestLogger    mode=summary
@@ -30,7 +30,7 @@ assertions, usa las de Robot normalmente: el estado final del caso sigue siendo 
 
 ## Error sin response
 
-```robotframework
+```robotframework hl_lines="9-11 13"
 *** Settings ***
 Library    RequestsLibrary
 Library    RequestLogger
@@ -69,6 +69,6 @@ interpreta como markup Rich y se eliminan secuencias de control del terminal.
 
 Usa `syntax_theme` para elegir los colores y el fondo del bloque JSON; los colores HTTP y de assertions se conservan. Consulta [Temas](themes.md) para comparar e importar cada tema.
 
-```robotframework
+```robotframework hl_lines="1"
 Library    RequestLogger    mode=full    syntax_theme=monokai
 ```
