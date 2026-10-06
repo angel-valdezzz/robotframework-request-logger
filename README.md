@@ -105,5 +105,6 @@ MIT. See [LICENSE](LICENSE).
 Choose an installed Pygments theme from the import. Default: `monokai`. No theme file is needed. Compare every available style in [Themes](https://angel-valdezzz.github.io/robotframework-request-logger/themes/).
 
 ```robotframework
+*** Settings ***
 Library    RequestLogger    mode=full    syntax_theme=monokai
 ```

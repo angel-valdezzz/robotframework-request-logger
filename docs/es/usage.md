@@ -69,6 +69,7 @@ interpreta como markup Rich y se eliminan secuencias de control del terminal.
 
 Usa `syntax_theme` para elegir los colores y el fondo del bloque JSON; los colores HTTP y de assertions se conservan. Consulta [Temas](themes.md) para comparar e importar cada tema.
 
-```robotframework hl_lines="1"
+```robotframework hl_lines="2"
+*** Settings ***
 Library    RequestLogger    mode=full    syntax_theme=monokai
 ```
