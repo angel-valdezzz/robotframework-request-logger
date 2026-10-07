@@ -1,14 +1,14 @@
 ╭──────────────────────────────── Health check ────────────────────────────────╮
-│ GET http://127.0.0.1:37023/health                                            │
-│ HTTP 200 · 2.34 ms                                                           │
+│ GET http://127.0.0.1:42895/health                                            │
+│ HTTP 200 · 3.17 ms                                                           │
 │ ──────────────────────────────── Assertions ──────────────────────────────── │
 │  Assertion                           Result             Message              │
 │  Health status                       PASS                                    │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭──────────────────────────── Consult distributor ─────────────────────────────╮
 │ GET                                                                          │
-│ http://127.0.0.1:37023/distributor?tag=one&tag=two&api_key=%5BREDACTED%5D    │
-│ HTTP 200 · 1.22 ms                                                           │
+│ http://127.0.0.1:42895/distributor?tag=one&tag=two&api_key=%5BREDACTED%5D    │
+│ HTTP 200 · 1.38 ms                                                           │
 │ ──────────────────────────────── Assertions ──────────────────────────────── │
 │  Assertion                         Result     Message                        │
 │  HTTP status                       PASS                                      │

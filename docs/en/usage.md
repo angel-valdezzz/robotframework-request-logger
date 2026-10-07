@@ -1,3 +1,8 @@
+---
+tags:
+  - Usage
+---
+
 # Usage and assertions
 
 ```robotframework hl_lines="8 11-13"

@@ -1,18 +1,26 @@
-<div class="hero" markdown>
-<div class="project-brand">
-<img class="project-brand-light" src="assets/logo-wordmark.svg" alt="Request Logger">
-<img class="project-brand-dark" src="assets/logo-wordmark-dark.svg" alt="Request Logger">
-</div>
+---
+template: home.html
+title: Request Logger
+description: Bring HTTP requests, responses and recorded assertions to your Robot console. Read the story without leaving your execution.
+---
 
+<div id="overview"></div>
 
-# HTTP visibility in your console
+## Choose how much to see
 
-**RequestLogger** complements Robot execution with recorded requests, responses, and
-assertion results. It does not call services, validate data, or depend on RequestReporter.
+<div class="grid cards" markdown>
 
-[Get started](usage.md){ .md-button .md-button--primary }
-[View console output](console.md){ .md-button }
-[Keywords](keywords/index.html){ .md-button }
+- **Summary**
+
+    A compact view of every exchange.
+
+- **Failures**
+
+    Focus on the operations associated with recorded failures.
+
+- **Full**
+
+    Read protected headers and bodies with JSON highlighting.
 
 </div>
 
@@ -28,3 +36,14 @@ poetry add robotframework-request-logger
 
 Output is printed when the test ends. Buffering allows failure filtering and applies
 known secrets across the entire test before any block is printed.
+
+## Follow the exchange
+
+```mermaid
+flowchart TD
+    A[RequestsLibrary] --> B[Log Response]
+    B --> C[Log Assertion Result]
+    C --> D[Console]
+```
+
+[Explore JSON themes](themes.md){ data-preview }

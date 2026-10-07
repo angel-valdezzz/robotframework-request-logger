@@ -1,7 +1,7 @@
 ╭──────────────────────────── Consult distributor ─────────────────────────────╮
 │ GET                                                                          │
-│ http://127.0.0.1:37105/distributor?tag=one&tag=two&api_key=%5BREDACTED%5D    │
-│ HTTP 200 · 1.19 ms                                                           │
+│ http://127.0.0.1:39353/distributor?tag=one&tag=two&api_key=%5BREDACTED%5D    │
+│ HTTP 200 · 1.73 ms                                                           │
 │ ────────────────────────────────── Params ────────────────────────────────── │
 │ [                                                                            │
 │   {                                                                          │
@@ -20,7 +20,7 @@
 │ ───────────────────────────── Request headers ────────────────────────────── │
 │ {                                                                            │
 │   "User-Agent": "python-requests/2.34.2",                                    │
-│   "Accept-Encoding": "gzip, deflate",                                        │
+│   "Accept-Encoding": "gzip, deflate, zstd",                                  │
 │   "Accept": "*/*",                                                           │
 │   "Connection": "keep-alive",                                                │
 │   "Authorization": "[REDACTED]"                                              │
@@ -28,7 +28,7 @@
 │ ───────────────────────────── Response headers ───────────────────────────── │
 │ {                                                                            │
 │   "Server": "BaseHTTP/0.6 Python/3.12.14",                                   │
-│   "Date": "Mon, 05 Oct 2026 19:02:33 GMT",                                   │
+│   "Date": "Wed, 07 Oct 2026 01:59:37 GMT",                                   │
 │   "Content-Type": "application/json",                                        │
 │   "Content-Length": "115"                                                    │
 │ }                                                                            │
