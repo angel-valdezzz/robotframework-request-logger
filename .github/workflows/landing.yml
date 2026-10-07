@@ -9,6 +9,9 @@ permissions:
 jobs:
   landing:
     runs-on: ubuntu-22.04
+    env:
+      POETRY_REQUESTS_TIMEOUT: "120"
+      POETRY_INSTALLER_MAX_WORKERS: "4"
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
