@@ -1,3 +1,8 @@
+---
+tags:
+  - Uso
+---
+
 # Modos y ejemplos visuales
 
 Estas imágenes son **exportaciones SVG de Rich desde ejecuciones reales de Robot**

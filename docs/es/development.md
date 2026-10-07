@@ -1,3 +1,8 @@
+---
+tags:
+  - Desarrollo
+---
+
 # Desarrollo y publicación
 
 Poetry gestiona dependencias y genera WHL/sdist. Ruff verifica Python, RoboCop Robot

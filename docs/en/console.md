@@ -1,3 +1,8 @@
+---
+tags:
+  - Usage
+---
+
 # Modes and visual examples
 
 These images are **Rich SVG exports from real Robot executions** using a local HTTP

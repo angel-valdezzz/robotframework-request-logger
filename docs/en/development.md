@@ -1,3 +1,8 @@
+---
+tags:
+  - Development
+---
+
 # Development and publishing
 
 Poetry manages dependencies and builds WHL/sdist distributions. Ruff checks Python,

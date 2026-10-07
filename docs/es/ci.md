@@ -1,3 +1,8 @@
+---
+tags:
+  - Uso
+---
+
 # CI y compatibilidad
 
 La librería imprime bloques estáticos, sin animaciones ni consultas obligatorias a

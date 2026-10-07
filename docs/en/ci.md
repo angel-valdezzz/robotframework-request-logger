@@ -1,3 +1,8 @@
+---
+tags:
+  - Usage
+---
+
 # CI and compatibility
 
 The library prints static blocks without animations or mandatory terminal-size queries.
