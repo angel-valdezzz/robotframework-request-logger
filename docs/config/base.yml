@@ -67,11 +67,13 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 extra_javascript:
+  - assets/navigation.js?v=locale-3
   - assets/mermaid.min.js
   - assets/landing.js
   - assets/keyword-links.js
   - assets/theme-gallery.js
 extra:
+  scope: /robotframework-request-logger/
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/angel-valdezzz/robotframework-request-logger
@@ -92,3 +94,6 @@ extra_css:
   - assets/stylesheets/standard.css
   - assets/stylesheets/theme-gallery.css
   - assets/stylesheets/visual.css
+
+hooks:
+  - docs/scripts/navigation.py

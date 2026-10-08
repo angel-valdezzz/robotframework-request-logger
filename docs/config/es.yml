@@ -43,3 +43,6 @@ nav:
   - Desarrollo y publicación: development.md
   - Ejemplos visuales: console.md
   - Temas: themes.md
+
+hooks:
+  - ../scripts/navigation.py
