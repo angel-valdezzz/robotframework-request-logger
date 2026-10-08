@@ -67,7 +67,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 extra_javascript:
-  - assets/navigation.js?v=locale-2
+  - assets/navigation.js?v=locale-3
   - assets/mermaid.min.js
   - assets/landing.js
   - assets/keyword-links.js
