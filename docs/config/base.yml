@@ -69,7 +69,7 @@ markdown_extensions:
 extra_javascript:
   - assets/navigation.js?v=locale-3
   - assets/mermaid.min.js
-  - assets/landing.js?v=pulse-1
+  - assets/landing.js?v=pulse-2
   - assets/keyword-links.js
   - assets/theme-gallery.js
 extra:
@@ -93,7 +93,7 @@ extra_css:
   - assets/stylesheets/standard.css
   - assets/stylesheets/theme-gallery.css
   - assets/stylesheets/visual.css
-  - assets/stylesheets/landing.css?v=pulse-1
+  - assets/stylesheets/landing.css?v=pulse-2
 
 hooks:
   - docs/scripts/navigation.py
