@@ -1,7 +1,7 @@
 ---
 template: home.html
 title: Request Logger
-description: Lleva peticiones HTTP, respuestas y validaciones registradas a la consola de Robot. Lee el resultado sin salir de tu ejecución.
+description: Peticiones, respuestas y validaciones en tu consola de Robot.
 ---
 
 <div id="overview"></div>
@@ -32,7 +32,27 @@ poetry add robotframework-request-logger
     `mode=summary` es el valor predeterminado. Conserva la consola habitual de Robot;
     no necesitas cambiar el comando de ejecución.
 
-![Resumen de consola generado desde una ejecución real](assets/console-summary.svg)
+<section class="er-real-console" id="console-preview" markdown>
+
+## La consola, tal como se genera
+
+Estas imágenes son exportaciones SVG de Rich desde las pruebas ejecutables del proyecto. El ejemplo contiene un fallo intencional; muestra la salida real de cada modo.
+
+=== "Summary"
+
+    ![Request Logger · Summary](assets/console-summary.svg)
+
+=== "Failures"
+
+    ![Request Logger · Failures](assets/console-failures.svg)
+
+=== "Full"
+
+    ![Request Logger · Full](assets/console-full.svg)
+
+[Ver cómo reproducir estas salidas](console.md)
+
+</section>
 
 La impresión ocurre al cerrar el test. El buffering permite filtrar fallos y aplicar
 secretos conocidos durante todo el caso antes de emitir cualquier bloque.
