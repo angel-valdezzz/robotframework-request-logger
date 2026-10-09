@@ -105,7 +105,7 @@ def main() -> None:
                     page.evaluate("document.fonts.ready")
                     assert page.locator("h1").count() == 1
                     assert page.locator(".er-preview,canvas").count() == 0
-                    logo = page.locator(".md-logo img").get_attribute("src")
+                    logo = page.locator(".md-header .md-logo img").get_attribute("src")
                     assert logo and logo.endswith("assets/logo-dark.svg")
                     check_viewport(page)
                     page.screenshot(path=str(output / f"{lang}-{width}-{height}-initial.png"))
