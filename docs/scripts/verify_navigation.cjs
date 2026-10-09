@@ -25,6 +25,12 @@ const pages = files(site).filter(file => file.endsWith('.html')).map(file => {
   return {file, html, dom, targets, current};
 }).filter(Boolean);
 assert(pages.length > 0, 'No translated pages found');
+for (const language of ['', 'es']) {
+  const index = JSON.parse(fs.readFileSync(path.join(site, language, 'search/search_index.json'), 'utf8'));
+  assert(index.docs.length > 0, 'Search must retain documentation');
+  assert(index.docs.every(doc => !/"fragments"\s*:|"current"\s*:/.test(doc.text)),
+    'Language metadata must not appear in search snippets');
+}
 const scope = pages[0].targets.find(target => target.lang === 'en').link.split('/')[1];
 const base = `/${scope}/`;
 
