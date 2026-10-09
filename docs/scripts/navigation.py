@@ -56,7 +56,11 @@ def on_page_content(html, page, config, **_kwargs):
     # Material replaces content during instant navigation but keeps the header.
     # Carry destinations inside that content so the existing selector is updated.
     data = json.dumps(_alternates(page, config), ensure_ascii=True).replace("<", "\\u003c")
-    return html + f"<span hidden data-doc-alternates>{html_tools.escape(data)}</span>"
+    # Keep the inert metadata out of search snippets while retaining it on instant navigation.
+    return (
+        html
+        + f'<span hidden data-search-exclude data-doc-alternates>{html_tools.escape(data)}</span>'
+    )
 
 
 def on_page_context(context, page, config, **_kwargs):
