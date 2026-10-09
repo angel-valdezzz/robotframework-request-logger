@@ -105,7 +105,8 @@ def main() -> None:
                     page.evaluate("document.fonts.ready")
                     assert page.locator("h1").count() == 1
                     assert page.locator(".er-preview,canvas").count() == 0
-                    assert page.locator(".md-logo img").get_attribute("src").endswith("assets/logo-dark.svg")
+                    logo = page.locator(".md-logo img").get_attribute("src")
+                    assert logo and logo.endswith("assets/logo-dark.svg")
                     check_viewport(page)
                     page.screenshot(path=str(output / f"{lang}-{width}-{height}-initial.png"))
                     # The pulse advances over time and loops without a stopping tour.
@@ -184,7 +185,8 @@ def main() -> None:
         server.shutdown()
     (output / "measurements.json").write_text(json.dumps(measurements, indent=2))
     print(
-        "Landing passed: EN/ES, four viewports, themes, motion, real console, search and navigation."
+        "Landing passed: EN/ES, four viewports, themes, motion, "
+        "real console, search and navigation."
     )
 
 
