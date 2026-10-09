@@ -1,9 +1,10 @@
 # Request Logger identity
 
-Version 1: rounded geometry, retaining the project's palette.
+Version 2: consistent rounded strokes, aligned rows and progressively shorter log lines, retaining the project's palette.
 
 - `logo.svg`: transparent symbol, used in navigation and portable reports.
-- `favicon.svg`: compact symbol on a white tile for light/dark browser tabs.
+- `logo-dark.svg`: transparent lighter-blue variant for dark navigation.
+- `favicon.svg`: transparent compact symbol with blue contrast on light/dark browser tabs.
 - `logo-wordmark.svg` / `logo-wordmark-dark.svg`: outlined lettering, no font download required.
 
 Primary #2459A8, secondary #284073, accent #B4E86D.

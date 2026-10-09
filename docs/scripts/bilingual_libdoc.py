@@ -109,7 +109,7 @@ def localize_menu(output: Path, root: Path, relative: str, language: str) -> Non
     )
     theme_style = (Path(__file__).parent / "libdoc-theme.css").read_text(encoding="utf-8")
     document += "<style>" + theme_style + "</style>" + styles()
-    brand_svg = (root / "docs/assets/logo.svg").read_text(encoding="utf-8")
+    brand_svg = (root / "docs/assets/logo-dark.svg").read_text(encoding="utf-8")
     brand_uri = "data:image/svg+xml;base64," + base64.b64encode(brand_svg.encode()).decode("ascii")
     document = re.sub(
         r'<link\b[^>]*\brel=(?:["\'](?:shortcut )?icon["\']|icon(?=\s|>))[^>]*>', "", document

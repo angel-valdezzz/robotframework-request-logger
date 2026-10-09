@@ -1,7 +1,7 @@
 ---
 template: home.html
 title: Request Logger
-description: Bring HTTP requests, responses and recorded assertions to your Robot console. Read the story without leaving your execution.
+description: Requests, responses and assertions in your Robot console.
 ---
 
 <div id="overview"></div>
@@ -32,7 +32,27 @@ poetry add robotframework-request-logger
     `mode=summary` is the default. Keep Robot's usual console;
     you do not need to change your execution command.
 
-![Console summary generated from a real execution](assets/console-summary.svg)
+<section class="er-real-console" id="console-preview" markdown>
+
+## The console, as generated
+
+These images are Rich SVG exports from the project’s executable tests. The example contains an intentional failure and shows each mode’s actual output.
+
+=== "Summary"
+
+    ![Request Logger · Summary](assets/console-summary.svg)
+
+=== "Failures"
+
+    ![Request Logger · Failures](assets/console-failures.svg)
+
+=== "Full"
+
+    ![Request Logger · Full](assets/console-full.svg)
+
+[See how to reproduce these outputs](console.md)
+
+</section>
 
 Output is printed when the test ends. Buffering allows failure filtering and applies
 known secrets across the entire test before any block is printed.

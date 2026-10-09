@@ -75,7 +75,7 @@ body::before {content:"";position:fixed;inset:0 0 auto;height:54px;background:li
 .libdoc-title {background:transparent;color:white;gap:10px;height:38px;max-width:calc(100% - 330px);}
 .libdoc-title h1 {font-size:1.4rem;color:white;}
 html.scrolled .libdoc-title {max-width:calc(100% - 330px);}
-.libdoc-brand-mark {width:34px;height:34px;flex:none;padding:3px;background:white;border-radius:9px;box-sizing:border-box;}
+.libdoc-brand-mark {width:34px;height:34px;flex:none;padding:0;background:transparent;border-radius:0;box-sizing:border-box;}
 #libdoc-controls {background:transparent;border:0;min-height:46px;}
 #libdoc-theme-toggle,#libdoc-controls #language-container button {background:#ffffff18;color:white;border:1px solid #ffffff50;border-radius:7px;}
 #libdoc-controls #language-container ul {background:var(--background-color);border:1px solid var(--border-color);border-radius:8px;box-shadow:0 8px 24px #0003;}
