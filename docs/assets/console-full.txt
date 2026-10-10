@@ -1,6 +1,6 @@
 ╭──────────────────────────────── Health check ────────────────────────────────╮
-│ GET http://127.0.0.1:39391/health                                            │
-│ HTTP 200 · 1.87 ms                                                           │
+│ GET http://127.0.0.1:43767/health                                            │
+│ HTTP 200 · 1.08 ms                                                           │
 │ ───────────────────────────── Request headers ────────────────────────────── │
 │ {                                                                            │
 │   "User-Agent": "python-requests/2.34.2",                                    │
@@ -11,28 +11,24 @@
 │ ───────────────────────────── Response headers ───────────────────────────── │
 │ {                                                                            │
 │   "Server": "BaseHTTP/0.6 Python/3.12.14",                                   │
-│   "Date": "Wed, 07 Oct 2026 01:59:38 GMT",                                   │
+│   "Date": "Sat, 10 Oct 2026 00:20:39 GMT",                                   │
 │   "Content-Type": "application/json",                                        │
-│   "Content-Length": "115"                                                    │
+│   "Content-Length": "83"                                                     │
 │ }                                                                            │
 │ ────────────────────────────── Response body ─────────────────────────────── │
 │ {                                                                            │
-│   "folio": "ALT-1042",                                                       │
-│   "rfc": "",                                                                 │
+│   "id": 42,                                                                  │
+│   "title": "",                                                               │
 │   "access_token": "[REDACTED]",                                              │
-│   "office": {                                                                │
-│     "name": "Centro",                                                        │
-│     "active": true                                                           │
-│   }                                                                          │
+│   "category": "fiction"                                                      │
 │ }                                                                            │
 │ ──────────────────────────────── Assertions ──────────────────────────────── │
 │  Assertion                           Result             Message              │
 │  Health status                       PASS                                    │
 ╰──────────────────────────────────────────────────────────────────────────────╯
-╭──────────────────────────── Consult distributor ─────────────────────────────╮
-│ GET                                                                          │
-│ http://127.0.0.1:39391/distributor?tag=one&tag=two&api_key=%5BREDACTED%5D    │
-│ HTTP 200 · 1.42 ms                                                           │
+╭──────────────────────────────── Consult book ────────────────────────────────╮
+│ GET http://127.0.0.1:43767/books/42?tag=one&tag=two&api_key=%5BREDACTED%5D   │
+│ HTTP 200 · 0.91 ms                                                           │
 │ ────────────────────────────────── Params ────────────────────────────────── │
 │ [                                                                            │
 │   {                                                                          │
@@ -59,23 +55,20 @@
 │ ───────────────────────────── Response headers ───────────────────────────── │
 │ {                                                                            │
 │   "Server": "BaseHTTP/0.6 Python/3.12.14",                                   │
-│   "Date": "Wed, 07 Oct 2026 01:59:38 GMT",                                   │
+│   "Date": "Sat, 10 Oct 2026 00:20:39 GMT",                                   │
 │   "Content-Type": "application/json",                                        │
-│   "Content-Length": "115"                                                    │
+│   "Content-Length": "83"                                                     │
 │ }                                                                            │
 │ ────────────────────────────── Response body ─────────────────────────────── │
 │ {                                                                            │
-│   "folio": "ALT-1042",                                                       │
-│   "rfc": "",                                                                 │
+│   "id": 42,                                                                  │
+│   "title": "",                                                               │
 │   "access_token": "[REDACTED]",                                              │
-│   "office": {                                                                │
-│     "name": "Centro",                                                        │
-│     "active": true                                                           │
-│   }                                                                          │
+│   "category": "fiction"                                                      │
 │ }                                                                            │
 │ ──────────────────────────────── Assertions ──────────────────────────────── │
-│  Assertion                         Result     Message                        │
-│  HTTP status                       PASS                                      │
-│  RFC must contain a value          FAIL       '' should not be empty.        │
+│  Assertion                             Result    Message                     │
+│  HTTP status                           PASS                                  │
+│  Book title must contain a value       FAIL      '' should not be empty.     │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 Robot FAIL: '' should not be empty.

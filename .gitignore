@@ -18,3 +18,5 @@ docs/es/keywords/
 
 .cache/
 docs/config/.cache/
+docs/overrides/partials/console-excerpt.html
+docs/assets/book-example.zip

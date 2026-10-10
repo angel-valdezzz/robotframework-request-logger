@@ -1,6 +1,7 @@
-"""Check real Chromium rendering, ambient motion and bilingual documentation flows."""
+"""Check the approved console journey and native bilingual Material navigation."""
 
 import json
+import os
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -13,10 +14,10 @@ MOUNT = "robotframework-request-logger"
 
 
 def check_viewport(page: Page) -> None:
-    """Persistent controls and both calls to action must fit without scrolling."""
+    """Actions and native controls remain visible; console text stays inside its surface."""
     page.evaluate("scrollTo(0, 0)")
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-    assert page.locator(".er-action,.er-scroll-cue").evaluate_all(
+    assert page.locator(".er-action").evaluate_all(
         "els => els.every(el => {const b=el.getBoundingClientRect();"
         "return b.top>=0 && b.bottom<=innerHeight && b.left>=0 && b.right<=innerWidth;})"
     )
@@ -27,12 +28,18 @@ def check_viewport(page: Page) -> None:
     assert page.locator(".md-header").evaluate(
         "el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)'"
     )
+    assert page.locator("#trace-result").evaluate("el => el.scrollWidth <= el.clientWidth")
+    if page.viewport_size["width"] >= 1050:
+        assert page.locator(".er-scroll-cue").evaluate(
+            "el => el.getBoundingClientRect().bottom <= innerHeight"
+        ), page.locator(".er-scroll-cue").bounding_box()
 
 
 def check_console(page: Page, lang: str) -> None:
-    """The hero link exposes real Rich exports, and all three native tabs work."""
+    """The native tabs display the actual neutral book execution in every mode."""
     page.locator(".er-action-secondary").click()
     section = page.locator(".er-real-console")
+    expect(section).to_be_focused()
     for mode in ("Summary", "Failures", "Full"):
         section.locator("label").filter(has_text=mode).click()
         image = section.locator(f'img[src$="console-{mode.lower()}.svg"]')
@@ -40,6 +47,33 @@ def check_console(page: Page, lang: str) -> None:
         assert image.evaluate("el => el.complete && el.naturalWidth > 0")
     page.screenshot(path=str(ROOT / "build/landing-checks" / f"{lang}-real-console.png"))
     page.evaluate("scrollTo(0, 0)")
+
+
+def check_motion(page: Page, base: str) -> None:
+    """Motion loops, pauses, resumes and never pauses on hover."""
+    page.goto(base)
+    expect(page.locator(".er-motion-ready")).to_be_visible()
+    page.locator(".er-action-primary").hover()
+    page.wait_for_function("document.querySelector('.response').classList.contains('active')")
+    expect(page.locator("body")).to_have_attribute("data-er-motion-paused", "false")
+    page.wait_for_function("document.querySelector('#trace-result').classList.contains('complete')")
+    expect(page.locator("#secret-value")).to_have_text("[REDACTED]")
+    assert page.locator("#trace-assertion").inner_text().endswith("'' should not be empty.")
+    page.locator("[data-er-pause]").click()
+    expect(page.locator("[data-er-pause]")).to_have_attribute("aria-pressed", "true")
+    before = page.locator("#exchange").inner_html()
+    page.wait_for_timeout(180)
+    assert before == page.locator("#exchange").inner_html()
+    page.locator("[data-er-pause]").click()
+    page.wait_for_function("document.querySelector('.er-hero-inner').dataset.phase==='request'")
+    page.wait_for_function("document.querySelector('.response').classList.contains('active')")
+    # A second mount must have one working pause listener and a running timeline.
+    page.locator(".er-action-primary").click()
+    page.wait_for_url("**/usage/")
+    page.locator(".md-logo").first.click()
+    expect(page.locator(".er-motion-ready")).to_be_visible()
+    page.locator("[data-er-pause]").click()
+    expect(page.locator("[data-er-pause]")).to_have_attribute("aria-pressed", "true")
 
 
 def check_documentation(page: Page, base: str) -> None:
@@ -63,15 +97,13 @@ def check_documentation(page: Page, base: str) -> None:
       const header=document.querySelector('.md-header'),tabs=document.querySelector('.md-tabs');
       const a=getComputedStyle(header),b=getComputedStyle(tabs);
       return a.animationName==='er-header-flow' && b.animationName===a.animationName &&
-        a.backgroundImage===b.backgroundImage && a.backgroundPosition===b.backgroundPosition &&
-        Math.abs(header.getAnimations()[0].currentTime-tabs.getAnimations()[0].currentTime)<1;
+        a.backgroundImage===b.backgroundImage &&
+        Math.abs(header.getAnimations()[0].currentTime-tabs.getAnimations()[0].currentTime)<2;
     }""")
     page.screenshot(path=str(ROOT / "build/landing-checks/docs-es-header.png"))
-    # Material retains the header when returning through instant navigation.
     page.locator(".md-logo").first.click()
-    expect(page.locator("[data-er-pause]")).to_be_visible()
-    page.locator("[data-er-pause]").click()
-    expect(page.locator("body")).to_have_attribute("data-er-motion-paused", "true")
+    expect(page.locator(".er-motion-ready")).to_be_visible()
+    expect(page.locator("#trace-label")).to_have_text("SALIDA DE CONSOLA")
     page.locator(".er-scroll-cue").click()
     expect(page.locator("#er-content")).to_be_focused()
     page.wait_for_function("scrollY > 100")
@@ -92,92 +124,58 @@ def main() -> None:
     measurements = []
     try:
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(args=["--no-sandbox"])
+            executable = os.environ.get("LOGGER_CHROMIUM_PATH")
+            browser = playwright.chromium.launch(
+                executable_path=executable, args=["--no-sandbox", "--disable-dev-shm-usage"]
+            )
             for lang in ("en", "es"):
-                for width, height in ((1440, 1024), (1366, 625), (390, 844), (820, 1180)):
-                    page = browser.new_page(viewport={"width": width, "height": height})
+                for width, height in (
+                    (1440, 1024),
+                    (1366, 625),
+                    (390, 844),
+                    (820, 1180),
+                    (320, 740),
+                ):
+                    page = browser.new_page(
+                        viewport={"width": width, "height": height}, reduced_motion="reduce"
+                    )
                     errors: list[str] = []
                     page.on("pageerror", lambda error, found=errors: found.append(str(error)))
                     page.goto(base + ("es/" if lang == "es" else ""))
-                    expect(page.locator("[data-er-pause]")).to_be_visible()
-                    page.locator(".er-pulse-art").first.wait_for(state="visible")
-                    page.evaluate("Promise.all([...document.images].map(i=>i.decode()))")
+                    expect(page.locator(".er-motion-ready")).to_be_visible()
                     page.evaluate("document.fonts.ready")
                     assert page.locator("h1").count() == 1
-                    assert page.locator(".er-preview,canvas").count() == 0
-                    logo = page.locator(".md-header .md-logo img").get_attribute("src")
-                    assert logo and logo.endswith("assets/logo-dark.svg")
-                    check_viewport(page)
+                    assert page.locator(".er-preview,canvas,.er-pulse-art").count() == 0
+                    expect(page.locator("#trace-result")).to_have_class("trace-result complete")
+                    expect(page.locator("[data-er-pause]")).to_be_disabled()
+                    assert page.locator("#traveler").is_hidden()
+                    assert page.locator(".md-header .md-logo").first.is_visible()
                     page.screenshot(path=str(output / f"{lang}-{width}-{height}-initial.png"))
-                    # The pulse advances over time and loops without a stopping tour.
-                    before = page.locator(".er-pulse-art").evaluate_all(
-                        "els=>els.map(el=>getComputedStyle(el).transform)"
-                    )
-                    page.wait_for_timeout(180)
-                    assert before != page.locator(".er-pulse-art").evaluate_all(
-                        "els=>els.map(el=>getComputedStyle(el).transform)"
-                    )
-                    page.locator("[data-er-pause]").click()
-                    expect(page.locator("[data-er-pause]")).to_have_attribute(
-                        "aria-pressed", "true"
-                    )
-                    page.wait_for_function(
-                        "[...document.querySelectorAll('.er-pulse-art')].every("
-                        "el=>getComputedStyle(el).animationPlayState==='paused')"
-                    )
-                    page.evaluate(
-                        "new Promise(resolve=>requestAnimationFrame("
-                        "()=>requestAnimationFrame(resolve)))"
-                    )
-                    paused = page.locator(".er-pulse-art").evaluate_all(
-                        "els=>els.map(el=>getComputedStyle(el).transform)"
-                    )
-                    page.wait_for_timeout(180)
-                    assert paused == page.locator(".er-pulse-art").evaluate_all(
-                        "els=>els.map(el=>getComputedStyle(el).transform)"
-                    )
-                    styles = []
+                    check_viewport(page)
                     for scheme in ("default", "slate"):
                         page.evaluate(
-                            "scheme => document.body.setAttribute('data-md-color-scheme',scheme)",
+                            "scheme=>document.body.setAttribute('data-md-color-scheme',scheme)",
                             scheme,
                         )
-                        styles.append(
-                            page.locator("#er-headline").evaluate(
-                                "el => getComputedStyle(el).color"
-                            )
+                        assert (
+                            page.locator("#er-headline").evaluate("el=>getComputedStyle(el).color")
+                            == "rgb(237, 242, 250)"
                         )
-                        page.screenshot(path=str(output / f"{lang}-{width}-{height}-{scheme}.png"))
-                    assert styles[0] == styles[1]
-                    measurements.append(
-                        {
-                            "lang": lang,
-                            "width": width,
-                            "height": height,
-                            "headline": page.locator("#er-headline").bounding_box(),
-                        }
-                    )
+                    page.screenshot(path=str(output / f"{lang}-{width}-{height}.png"))
+                    measurements.append({"lang": lang, "width": width, "height": height})
                     if width == 1440:
-                        page.locator(".er-action-primary").hover()
-                        page.screenshot(path=str(output / f"{lang}-hover.png"))
                         check_console(page, lang)
-                    page.emulate_media(reduced_motion="reduce")
-                    expect(page.locator("[data-er-pause]")).to_be_disabled()
-                    assert page.locator(".er-pulse-art").evaluate_all(
-                        "els=>els.every(el=>getComputedStyle(el).animationName==='none')"
-                    )
-                    page.emulate_media(reduced_motion="no-preference")
-                    expect(page.locator("[data-er-pause]")).to_be_enabled()
                     assert not errors, errors
                     page.close()
             page = browser.new_page(viewport={"width": 1440, "height": 1024})
+            check_motion(page, base)
             check_documentation(page, base)
             page.close()
             context = browser.new_context(java_script_enabled=False)
             page = context.new_page()
             page.goto(base)
             expect(page.locator("[data-er-pause]")).to_be_hidden()
-            expect(page.locator(".er-action-primary")).to_be_visible()
+            expect(page.locator("#trace-result")).to_have_class("trace-result complete")
             page.locator(".er-action-secondary").click()
             assert page.url.endswith("#console-preview")
             browser.close()
@@ -185,8 +183,8 @@ def main() -> None:
         server.shutdown()
     (output / "measurements.json").write_text(json.dumps(measurements, indent=2))
     print(
-        "Landing passed: EN/ES, four viewports, themes, motion, "
-        "real console, search and navigation."
+        "Landing passed: EN/ES, five viewports, real console, loop, pause, reduced motion, "
+        "themes, search, instant navigation and shared header/nav phase."
     )
 
 

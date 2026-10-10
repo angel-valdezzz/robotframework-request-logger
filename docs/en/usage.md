@@ -11,9 +11,9 @@ Library    RequestsLibrary
 Library    RequestLogger    mode=summary
 
 *** Test Cases ***
-Get distributor
+Get book
     ${response}=    GET    ${URL}    expected_status=anything    timeout=10
-    ${id}=    Log Response    Get distributor    ${response}
+    ${id}=    Log Response    Get book    ${response}
     ${status}    ${message}=    Run Keyword And Ignore Error
     ...    Should Be Equal As Integers    ${response.status_code}    200
     Log Assertion Result    ${id}    Expected HTTP status    ${status}    ${message}

@@ -25,10 +25,10 @@ class Fixture:
                     sleep(0.1)
                 status = 404 if self.path.startswith("/missing") else 200
                 data = {
-                    "folio": "ALT-1042",
-                    "rfc": "",
+                    "id": 42,
+                    "title": "",
                     "access_token": "fake-secret-TOKEN",
-                    "office": {"name": "Centro", "active": True},
+                    "category": "fiction",
                 }
                 payload = json.dumps(data).encode()
                 self.send_response(status)

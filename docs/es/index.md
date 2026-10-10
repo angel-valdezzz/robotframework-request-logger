@@ -32,11 +32,11 @@ poetry add robotframework-request-logger
     `mode=summary` es el valor predeterminado. Conserva la consola habitual de Robot;
     no necesitas cambiar el comando de ejecución.
 
-<section class="er-real-console" id="console-preview" markdown>
+<section class="er-real-console" id="console-preview" tabindex="-1" markdown>
 
 ## La consola, tal como se genera
 
-Estas imágenes son exportaciones SVG de Rich desde las pruebas ejecutables del proyecto. El ejemplo contiene un fallo intencional; muestra la salida real de cada modo.
+Estas imágenes son exportaciones SVG de Rich desde las pruebas ejecutables del proyecto. El caso ficticio de un libro devuelve HTTP 200 con el título vacío; la prueba registra el fallo de esa validación. Cada pestaña muestra la salida real.
 
 === "Summary"
 
@@ -50,7 +50,7 @@ Estas imágenes son exportaciones SVG de Rich desde las pruebas ejecutables del 
 
     ![Request Logger · Full](assets/console-full.svg)
 
-[Ver cómo reproducir estas salidas](console.md)
+[Ver cómo reproducir estas salidas](console.md) · [Descargar el caso de prueba](assets/book-example.zip){ download }
 
 </section>
 
