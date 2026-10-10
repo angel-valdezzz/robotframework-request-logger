@@ -48,8 +48,8 @@ La tipografía y los colores finales pueden variar según tu terminal.
     [Salida de texto completa](assets/console-full.txt)
 
 !!! note "El ejemplo falla intencionalmente"
-    Primero se registra un health check aprobado; después el servicio devuelve HTTP 200 y un RFC vacío. El test registra una assertion PASS
-    para el status y una FAIL para el RFC; luego propaga el fallo. El código de salida
+    Primero se registra un health check aprobado; después el servicio devuelve HTTP 200 y el título vacío de un libro. El test registra una assertion PASS
+    para el status y una FAIL para el título; luego propaga el fallo. El código de salida
     de Robot es 1. El código reproducible está en tests/visual.robot del repositorio.
 
 ## Conservar la consola de Robot

@@ -4,20 +4,32 @@
 {% set es = config.theme.language == 'es' %}
 {% macro icon(name) %}<span class="er-icon" aria-hidden="true">{% include ".icons/material/" ~ name ~ ".svg" %}</span>{% endmacro %}
 <section class="er-hero" aria-labelledby="er-headline" data-er-hero data-lang="{{ config.theme.language }}">
-  <img class="er-pulse-art" src="{{ 'assets/images/landing-pulse.webp' | url }}" alt="" aria-hidden="true" fetchpriority="high">
   <div class="er-hero-inner">
-    <div class="er-hero-copy">
-      <h1 id="er-headline"><span>{{ 'Cada intercambio.' if es else 'Every exchange.' }}</span><em>{{ 'A la vista.' if es else 'In plain sight.' }}</em></h1>
-      <p>{{ 'Peticiones, respuestas y validaciones en tu consola de Robot.' if es else 'Requests, responses and assertions in your Robot console.' }}</p>
-      <div class="er-actions">
-        <a class="er-action er-action-primary" href="{{ 'usage/' | url }}">{{ 'Comenzar' if es else 'Get started' }} {{ icon('arrow-right') }}</a>
-        <a class="er-action er-action-secondary" href="#console-preview">{{ 'Explorar la consola' if es else 'Explore the console' }} {{ icon('arrow-right') }}</a>
-      </div>
-      <div class="er-facts">Rich · HTTP · JSON</div>
+    <div class="edition"><span>HTTP / RICH / ROBOT FRAMEWORK</span><span data-i18n="edition">{{ 'DEL INTERCAMBIO AL DIAGNÓSTICO' if es else 'FROM EXCHANGE TO DIAGNOSIS' }}</span></div>
+    <div class="lead">
+      <h1 id="er-headline"><span data-i18n="title1">{{ 'Cada intercambio.' if es else 'Every exchange.' }}</span><em data-i18n="title2">{{ 'A la vista.' if es else 'In plain sight.' }}</em></h1>
+      <div class="intro"><p data-i18n="intro">{{ 'Peticiones, respuestas y validaciones en tu consola de Robot.' if es else 'Requests, responses and assertions in your Robot console.' }}</p><div class="er-actions"><a class="er-action er-action-primary" data-doc="usage/" href="{{ 'usage/' | url }}"><span data-i18n="start">{{ 'Comenzar' if es else 'Get started' }}</span>{{ icon('arrow-right') }}</a><a class="er-action er-action-secondary" href="#console-preview"><span data-i18n="explore">{{ 'Explorar la consola' if es else 'Explore the console' }}</span></a></div></div>
     </div>
+    <section class="exchange" aria-label="{{ 'Recorrido del caso de prueba' if es else 'Test case journey' }}" id="exchange">
+      <div class="exchange-top"><span data-i18n="exampleSource">{{ 'CASO FICTICIO / LIBROS' if es else 'FICTIONAL CASE / BOOKS' }}</span><span>Consult book</span></div>
+      <div class="exchange-stages">
+        <article class="exchange-step request" data-stage="0"><div class="step-heading"><span>01</span><h2 data-i18n="requestLabel">{{ 'Petición' if es else 'Request' }}</h2></div><div class="request-main"><span id="request-method">GET</span><code>/books/42</code></div><p class="secret-row"><code>api_key<span class="equals">=</span><span id="secret-value">[REDACTED]</span></code></p><p class="step-note" data-i18n="requestNote">{{ 'Datos sensibles protegidos en la salida.' if es else 'Sensitive data protected in the output.' }}</p></article>
+        <article class="exchange-step response revealed" data-stage="1"><div class="step-heading"><span>02</span><h2 data-i18n="responseLabel">{{ 'Respuesta' if es else 'Response' }}</h2></div><div class="status-large"><span class="http-label">HTTP</span><strong id="response-value">200<span class="status-punctuation">.</span></strong></div><p class="body-fragment"><span class="brace">{</span> <code>"title"<span class="json-colon">:</span> <span id="response-title">""</span></code> <span class="brace">}</span></p><p class="step-note" data-i18n="responseNote">{{ 'El servicio respondió. El título está vacío.' if es else 'The service responded. The title is empty.' }}</p></article>
+        <article class="exchange-step assertion revealed" data-stage="2"><div class="step-heading"><span>03</span><h2 data-i18n="assertionLabel">{{ 'Assertion registrada' if es else 'Recorded assertion' }}</h2></div><div class="status-large"><span class="assert-label" data-i18n="assertName">{{ 'Título con valor' if es else 'Title has a value' }}</span><strong id="assert-result">FAIL<span class="status-punctuation">.</span></strong></div><p class="assert-rule"><code>Book title must contain a value</code></p><p class="step-note" data-i18n="assertionNote">{{ 'La prueba registra el fallo de la validación.' if es else 'The test records the failed assertion.' }}</p></article>
+      </div>
+      <div class="trace-result complete" id="trace-result" role="region" aria-labelledby="trace-label">
+        <div class="trace-header"><span id="trace-label" data-i18n="consoleOutput">{{ 'SALIDA DE CONSOLA' if es else 'CONSOLE OUTPUT' }}</span><span>Summary · Consult book</span></div>
+        <div class="trace-values">
+          {% include "partials/console-excerpt.html" %}
+        </div>
+        <div class="trace-detail"><span data-i18n="consoleFragment">{{ 'Fragmento real · La salida completa está abajo.' if es else 'Actual excerpt · The complete output is below.' }}</span><span data-i18n="atClose">{{ 'AL CERRAR EL TEST' if es else 'WHEN THE TEST CLOSES' }}</span></div>
+      </div>
+      <div class="stage-caption" aria-hidden="true"><span class="caption-rule"></span><span id="stage-caption">{{ 'Una petición. Su secreto protegido.' if es else 'A request. Its secret protected.' }}</span><span id="stage-index">01 / 04</span></div>
+      <div id="traveler" aria-hidden="true" hidden></div>
+    </section>
+    <p class="example-note" data-i18n="exampleNote">{{ 'Un caso ficticio sobre un libro, con un fallo intencional. La salida real de la misma prueba está abajo.' if es else 'A fictional book test case with an intentional failure. Actual output from the same test is below.' }}</p>
+    <div class="cover-bottom"><a class="er-scroll-cue" href="#er-content"><span class="er-scroll-circle">{{ icon('arrow-down') }}</span><span data-i18n="discover">{{ 'Descubre Request Logger' if es else 'Discover Request Logger' }}</span></a><span class="cover-caption" data-i18n="coverCaption">{{ 'UN STATUS HTTP NO CUENTA TODA LA HISTORIA.' if es else 'AN HTTP STATUS DOES NOT TELL THE WHOLE STORY.' }}</span><button id="pause" data-er-pause type="button" aria-pressed="false" hidden>{{ icon('pause') }}<span data-i18n="pause">{{ 'Pausar' if es else 'Pause' }}</span></button></div>
   </div>
-  <a class="er-scroll-cue" href="#er-content"><span class="er-scroll-circle">{{ icon('arrow-down') }}</span><span>{{ 'Descubre Request Logger' if es else 'Discover Request Logger' }}</span></a>
-  <button class="er-motion-toggle" type="button" data-er-pause aria-pressed="false" hidden>{{ icon('pause') }}<span>{{ 'Pausar animación' if es else 'Pause animation' }}</span></button>
 </section>
 {% endblock %}
 {% block content %}<div class="er-home-content" id="er-content" tabindex="-1">{{ page.content }}</div>{% endblock %}

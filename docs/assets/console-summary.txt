@@ -1,17 +1,16 @@
 ╭──────────────────────────────── Health check ────────────────────────────────╮
-│ GET http://127.0.0.1:42895/health                                            │
-│ HTTP 200 · 3.17 ms                                                           │
+│ GET http://127.0.0.1:35165/health                                            │
+│ HTTP 200 · 2.20 ms                                                           │
 │ ──────────────────────────────── Assertions ──────────────────────────────── │
 │  Assertion                           Result             Message              │
 │  Health status                       PASS                                    │
 ╰──────────────────────────────────────────────────────────────────────────────╯
-╭──────────────────────────── Consult distributor ─────────────────────────────╮
-│ GET                                                                          │
-│ http://127.0.0.1:42895/distributor?tag=one&tag=two&api_key=%5BREDACTED%5D    │
-│ HTTP 200 · 1.38 ms                                                           │
+╭──────────────────────────────── Consult book ────────────────────────────────╮
+│ GET http://127.0.0.1:35165/books/42?tag=one&tag=two&api_key=%5BREDACTED%5D   │
+│ HTTP 200 · 1.80 ms                                                           │
 │ ──────────────────────────────── Assertions ──────────────────────────────── │
-│  Assertion                         Result     Message                        │
-│  HTTP status                       PASS                                      │
-│  RFC must contain a value          FAIL       '' should not be empty.        │
+│  Assertion                             Result    Message                     │
+│  HTTP status                           PASS                                  │
+│  Book title must contain a value       FAIL      '' should not be empty.     │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 Robot FAIL: '' should not be empty.

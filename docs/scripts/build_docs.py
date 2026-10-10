@@ -4,9 +4,11 @@ import html
 import io
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
@@ -17,6 +19,30 @@ from rich.terminal_theme import MONOKAI
 from robot import run
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def write_console_excerpt(text: str) -> None:
+    """Use the same genuine Summary execution in the hero and full console export."""
+    lines = [line.strip("│ ") for line in text.splitlines()]
+    request_index = next(i for i, line in enumerate(lines) if "/books/42?" in line)
+    request = lines[request_index]
+    response = lines[request_index + 1]
+    assert request.startswith("GET ") and response.startswith("HTTP 200 · ")
+    assertion = next(line for line in lines if "Book title must contain a value" in line)
+    _, result, message = re.split(r"\s{2,}", assertion, maxsplit=2)
+    assert result == "FAIL"
+    fragment = (
+        '<div class="console-line" id="trace-request"><b>GET</b> '
+        f"<code>{html.escape(request[4:])}</code></div>\n"
+        '<div class="console-line" id="trace-response">HTTP <b>200</b>'
+        f'<span class="console-duration">{html.escape(response[8:])}</span></div>\n'
+        '<div class="console-assertion" id="trace-assertion">'
+        '<div class="assertion-columns console-columns-labels" aria-hidden="true">'
+        "<span>Assertion</span><span>Result</span><span>Message</span></div>"
+        '<div class="assertion-columns"><span>Book title must contain a value</span>'
+        f'<b>FAIL</b><span class="console-message">{html.escape(message)}</span></div></div>\n'
+    )
+    (ROOT / "docs/overrides/partials/console-excerpt.html").write_text(fragment, encoding="utf-8")
 
 
 def main() -> None:
@@ -61,6 +87,8 @@ def main() -> None:
         console = captured[0]
         text = console.export_text(clear=False)
         assert "fake-secret-TOKEN" not in text and "fake-query-SECRET" not in text
+        if mode == "summary":
+            write_console_excerpt(text)
         console.save_svg(
             str(assets / f"console-{mode}.svg"),
             title=f"RequestLogger · {mode}",
@@ -68,6 +96,16 @@ def main() -> None:
             clear=False,
         )
         (assets / f"console-{mode}.txt").write_text(text, encoding="utf-8")
+    with zipfile.ZipFile(assets / "book-example.zip", "w", zipfile.ZIP_DEFLATED) as archive:
+        for name in ("visual.robot", "Fixture.py"):
+            archive.write(ROOT / "tests" / name, name)
+        archive.writestr(
+            "README.md",
+            "# Fictional book example\n\n"
+            "Install: pip install robotframework-request-logger robotframework-requests\n\n"
+            "Run: python -m robot --console none --variable MODE:summary visual.robot\n\n"
+            "Modes: summary, failures, full. Exit code 1 is expected: the book title is empty.\n",
+        )
     generate_themes(ROOT)
     # Assets are shared sources; each build publishes its own relative copies.
     for language in ("en", "es"):

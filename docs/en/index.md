@@ -32,11 +32,11 @@ poetry add robotframework-request-logger
     `mode=summary` is the default. Keep Robot's usual console;
     you do not need to change your execution command.
 
-<section class="er-real-console" id="console-preview" markdown>
+<section class="er-real-console" id="console-preview" tabindex="-1" markdown>
 
 ## The console, as generated
 
-These images are Rich SVG exports from the project’s executable tests. The example contains an intentional failure and shows each mode’s actual output.
+These images are Rich SVG exports from the project’s executable tests. The fictional book example returns HTTP 200 with an empty title; the test records a failing title assertion. Each tab shows the actual output.
 
 === "Summary"
 
@@ -50,7 +50,7 @@ These images are Rich SVG exports from the project’s executable tests. The exa
 
     ![Request Logger · Full](assets/console-full.svg)
 
-[See how to reproduce these outputs](console.md)
+[See how to reproduce these outputs](console.md) · [Download the test case](assets/book-example.zip){ download }
 
 </section>
 

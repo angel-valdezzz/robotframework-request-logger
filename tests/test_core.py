@@ -104,8 +104,8 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(self.render(lib), "")
         lib.start_test(None, None)
         rid = lib.log_response("Invalid200", response())
-        lib.log_assertion_result(rid, "Invalid content", "FAIL", "Missing RFC")
-        self.assertIn("Missing RFC", self.render(lib, "FAIL"))
+        lib.log_assertion_result(rid, "Invalid content", "FAIL", "Missing title")
+        self.assertIn("Missing title", self.render(lib, "FAIL"))
 
     def test_timeout_no_fabricated_response(self) -> None:
         lib = RequestLogger("full")

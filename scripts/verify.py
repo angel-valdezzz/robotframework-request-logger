@@ -44,7 +44,7 @@ def main() -> None:
             env={**os.environ, "PYTHONUTF8": "1", "TTY_COMPATIBLE": "0"},
         )
         assert process.returncode == 1, process.stderr
-        assert "Consult distributor" in process.stdout and "HTTP 200" in process.stdout
+        assert "Consult book" in process.stdout and "HTTP 200" in process.stdout
         assert ("Health check" in process.stdout) == (mode != "failures")
         assert (
             "fake-secret-TOKEN" not in process.stdout and "fake-query-SECRET" not in process.stdout

@@ -49,8 +49,8 @@ The final font and colors may vary depending on your terminal.
 
 !!! note "The example fails intentionally"
     A passing health check is recorded first; then the service returns HTTP 200 and an
-    empty RFC. The test records a PASS assertion for the status and a FAIL assertion
-    for the RFC, then propagates the failure. Robot's exit code is 1.
+    empty book title. The test records a PASS assertion for the status and a FAIL assertion
+    for the title, then propagates the failure. Robot's exit code is 1.
     The reproducible source is tests/visual.robot in the repository.
 
 ## Keep Robot's console
